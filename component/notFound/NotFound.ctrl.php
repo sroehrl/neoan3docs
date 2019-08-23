@@ -3,6 +3,7 @@
 
 namespace Neoan3\Components;
 
+use Neoan3\Apps\Ops;
 use Neoan3\Core\Unicore;
 
 class NotFound extends Unicore
@@ -12,7 +13,11 @@ class NotFound extends Unicore
      */
     function init()
     {
-        $this->uni('docs')->hook('main', 'notFound')->output();
+
+        $this->uni('docs')->hook('main', 'notFound',[
+            'endpoint'=>sub(0),
+            'class'=>Ops::toCamelCase(sub(0))
+        ])->output();
     }
 
 

@@ -1,5 +1,27 @@
 <section class="section">
-    <h1 class="title">404 - not found</h1>
+    <h1 class="title">"{{endpoint}}" does not exist (yet?)</h1>
     <h2 class="subtitle">Documentation missing?</h2>
     <p>If you are interested, please consider helping us out: <a href="https://github.com/sroehrl/neoan3docs">https://github.com/sroehrl/neoan3docs</a></p>
+    <article class="message" style="margin: 8px 0 8px 0">
+        <div class="message-header">
+            <p>How to create this endpoint?</p>
+        </div>
+        <div class="message-body has-text-white">
+            Check out the documentation repo and be sure you have installed
+            <span class="tag is-primary">composer</span>
+            <span class="tag is-primary">npm</span>
+            <span class="tag is-primary">neoan3-cli</span>
+            <p>From within the project folder, run <br><code>neoan3 new component {{endpoint}}</code></p>
+            <p>Now code away (probably in the view.html of your new component) and send a pull request if you are happy with your work.</p>
+        </div>
+    </article>
+    <article class="message is-warning has-background-dark" style="margin: 8px 0 8px 0">
+        <div class="message-header">
+            <p>This link is wrong?</p>
+        </div>
+        <div class="message-body has-text-white">
+            Either the page you came from or the menu (component/menu/menu.view.html) is the culprit.
+            Feel free to generate a pull-request or report an issue. Thank you!
+        </div>
+    </article>
 </section>
