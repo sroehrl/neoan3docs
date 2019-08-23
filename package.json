@@ -22,5 +22,6 @@
   },
   "homepage": "https://github.com/sroehrl/neoan3#readme",
   "dependencies": {
+    "bulma": "^0.7.5"
   }
 }
