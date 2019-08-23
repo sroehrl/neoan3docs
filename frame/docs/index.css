@@ -1,18 +1,8 @@
 @charset "UTF-8";
-html {
-  max-height: 99vh;
-  overflow: hidden;
-}
-
-body {
-  height: 99vh;
-  overflow: hidden;
-}
-
 .custom-menu {
   margin: 7px;
   border-right: #00bdd6 1px solid;
-  max-height: 99vh;
+  height: 100vh;
   overflow: auto;
 }
 
@@ -31,7 +21,7 @@ body {
 }
 
 .main-content-container {
-  max-height: 99vh;
+  max-height: 100vh;
   overflow: auto;
 }
 
@@ -334,7 +324,7 @@ html {
   -webkit-font-smoothing: antialiased;
   min-width: 300px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   text-rendering: optimizeLegibility;
   text-size-adjust: 100%;
 }
@@ -419,7 +409,7 @@ span {
 }
 
 strong {
-  color: #363636;
+  color: #e6ee9b;
   font-weight: 700;
 }
 
@@ -453,7 +443,7 @@ table th:not([align]) {
   text-align: left;
 }
 table th {
-  color: #363636;
+  color: #e6ee9b;
 }
 
 .is-clearfix::after {
@@ -1566,11 +1556,11 @@ a.box:active {
 }
 .button.is-text:hover, .button.is-text.is-hovered, .button.is-text:focus, .button.is-text.is-focused {
   background-color: #333333;
-  color: #363636;
+  color: #e6ee9b;
 }
 .button.is-text:active, .button.is-text.is-active {
   background-color: #262626;
-  color: #363636;
+  color: #e6ee9b;
 }
 .button.is-text[disabled], fieldset[disabled] .button.is-text {
   background-color: transparent;
@@ -2576,7 +2566,7 @@ a.box:active {
 .content h4,
 .content h5,
 .content h6 {
-  color: #363636;
+  color: #e6ee9b;
   font-weight: 600;
   line-height: 1.125;
 }
@@ -2692,7 +2682,7 @@ a.box:active {
   vertical-align: top;
 }
 .content table th {
-  color: #363636;
+  color: #e6ee9b;
 }
 .content table th:not([align]) {
   text-align: left;
@@ -2700,12 +2690,12 @@ a.box:active {
 .content table thead td,
 .content table thead th {
   border-width: 0 0 2px;
-  color: #363636;
+  color: #e6ee9b;
 }
 .content table tfoot td,
 .content table tfoot th {
   border-width: 2px 0 0;
-  color: #363636;
+  color: #e6ee9b;
 }
 .content table tbody tr:last-child td,
 .content table tbody tr:last-child th {
@@ -3101,8 +3091,8 @@ a.box:active {
   }
 }
 .table {
-  background-color: white;
-  color: #363636;
+  background-color: #333333;
+  color: #F5F5F5;
 }
 .table td,
 .table th {
@@ -3188,7 +3178,7 @@ a.box:active {
   color: currentColor;
 }
 .table th {
-  color: #363636;
+  color: #e6ee9b;
 }
 .table th:not([align]) {
   text-align: left;
@@ -3212,7 +3202,7 @@ a.box:active {
 .table thead td,
 .table thead th {
   border-width: 0 0 2px;
-  color: #363636;
+  color: #e6ee9b;
 }
 .table tfoot {
   background-color: transparent;
@@ -3220,7 +3210,7 @@ a.box:active {
 .table tfoot td,
 .table tfoot th {
   border-width: 2px 0 0;
-  color: #363636;
+  color: #e6ee9b;
 }
 .table tbody {
   background-color: transparent;
@@ -3254,7 +3244,7 @@ a.box:active {
   padding: 0.25em 0.5em;
 }
 .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
-  background-color: #fafafa;
+  background-color: #1c1c1c;
 }
 
 .table-container {
@@ -4618,7 +4608,7 @@ a.tag:hover {
   padding-left: 0;
 }
 .breadcrumb li.is-active a {
-  color: #363636;
+  color: #e6ee9b;
   cursor: default;
   pointer-events: none;
 }
@@ -4686,7 +4676,7 @@ a.tag:hover {
 
 .card-header-title {
   align-items: center;
-  color: #363636;
+  color: #e6ee9b;
   display: flex;
   flex-grow: 1;
   font-weight: 700;
@@ -5290,7 +5280,7 @@ a.list-item {
 }
 
 .modal-card-title {
-  color: #363636;
+  color: #e6ee9b;
   flex-grow: 1;
   flex-shrink: 0;
   font-size: 1.5rem;
@@ -6505,7 +6495,7 @@ body.has-spaced-navbar-fixed-bottom {
 .panel-heading {
   background-color: #333333;
   border-radius: 4px 4px 0 0;
-  color: #363636;
+  color: #e6ee9b;
   font-size: 1.25em;
   font-weight: 300;
   line-height: 1.25;
@@ -6537,7 +6527,7 @@ body.has-spaced-navbar-fixed-bottom {
 
 .panel-block {
   align-items: center;
-  color: #363636;
+  color: #e6ee9b;
   display: flex;
   justify-content: flex-start;
   padding: 0.5em 0.75em;
@@ -6609,8 +6599,8 @@ label.panel-block:hover {
   vertical-align: top;
 }
 .tabs a:hover {
-  border-bottom-color: #363636;
-  color: #363636;
+  border-bottom-color: #e6ee9b;
+  color: #e6ee9b;
 }
 .tabs li {
   display: block;
@@ -9180,6 +9170,32 @@ label.panel-block:hover {
 pre code {
   color: #00bdd6;
   white-space: pre-line;
+}
+
+.has-margin {
+  margin: 32px 0 32px 0;
+}
+
+.blinking {
+  -webkit-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+}
+
+@keyframes blink {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: inherit;
+  }
+}
+@-webkit-keyframes blink {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: inherit;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

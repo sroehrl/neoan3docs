@@ -10,14 +10,16 @@ $body-background-color: $dark-skin
 $title-color: $primary
 $subtitle-color: $secondary
 $body-color: #F5F5F5
+$text-strong: $secondary
 
-html
-  max-height: 99vh
-  overflow: hidden
-body
-  height: 99vh
-  overflow: hidden
 
+// tables
+
+$table-background-color: $background
+$table-color: $body-color
+$table-striped-row-even-background-color: $dark-skin
+
+$body-overflow-y:hidden
 
 // menu
 
@@ -26,7 +28,7 @@ $menu-item-hover-color: $secondary
 .custom-menu
   margin: 7px
   border-right: $primary 1px solid
-  max-height: 99vh
+  height: 100vh
   overflow: auto
 
 // scrollbar
@@ -42,7 +44,7 @@ $menu-item-hover-color: $secondary
 // content-container
 
 .main-content-container
-  max-height: 99vh
+  max-height: 100vh
   overflow: auto
 @import "../../node_modules/bulma/bulma.sass"
 
@@ -51,3 +53,22 @@ pre code
   white-space: pre-line
 
 
+// spacing
+.has-margin
+  margin: $gap 0 $gap 0
+
+// blink
+.blinking
+  -webkit-animation: 1s blink step-end infinite
+  animation: 1s blink step-end infinite
+@keyframes blink
+  0%
+    color: transparent
+  50%
+    color: inherit
+
+@-webkit-keyframes blink
+  0%
+    color: transparent
+  50%
+    color: inherit
