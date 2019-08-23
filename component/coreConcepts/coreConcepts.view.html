@@ -1,0 +1,82 @@
+<section class="section">
+    <h1 class="title">Core concepts</h1>
+    <p>
+        PHP & MySQL are still dominating the web with no end in sight.
+        With the experience of decades in a changing world wide web, the combination produces the world's most reliable and maintainable applications.
+        <br>
+    </p>
+    <p>
+        neoan3 targets today's necessity to deliver in the shortest time possible. In order to facilitate that, some assumptions are made.
+        Since most users will have experience with other frameworks, let's start by comparing a few common concepts:
+    </p>
+    <table class="table is-striped has-margin">
+        <thead>
+        <tr>
+            <th>Concept</th>
+            <th>Common adoption</th>
+            <th>neoan3</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Routing</td>
+            <td>
+                Endpoints are usually defined separately and offer the possibility to hook middleware. This enables resource-conscious loading.
+            </td>
+            <td>
+                neoan3 generates valid endpoints based on naming of functions in components (see <a href="{{base}}routing/">Routing</a>).
+                Does your component class have a function "init"? Then it's a valid endpoint.
+                There are multiple methods of hooking in additional functionality (middleware) on various levels.
+            </td>
+        </tr>
+        <tr>
+            <td>Middleware</td>
+            <td>Modern frameworks understand the necessity to offer hooking mechanisms before certain functionality is triggered. Implementation greatly differs depending on the framework.</td>
+            <td>
+                neoan3 makes distinctions on the level of abstraction. Do I want to trigger particular functionality whenever X happens? Do I want to load and execute functionality every time the core runs?
+                Do I want to trigger functionality only on a particular endpoint? Everything is possible.
+            </td>
+        </tr>
+        <tr>
+            <td>Compilation & Caching</td>
+            <td>
+                Especially in recent years (and with the rise of nodeJS), the idea of a development infrastructure and a compiled and/or packaged end-product conquered interpreted languages as well.
+                The idea is as simple as effective: create a production system as lean as possible.
+            </td>
+            <td>
+                Is it possible to offer the same kind of speed and security otherwise? With intelligent caching it is! In neoan3, your development and production environment may only differ in certain variables.
+                This saves an enormous amount of time when dealing with larger projects, eradicates confusion and eliminated the necessity of "source" vs "public".
+            </td>
+        </tr>
+        <tr>
+            <td>Stream of consciousness</td>
+            <td>Knowing your framework will give you a good understanding of what files are interpreted when and how. This requires knowledge usually only gained with experience.</td>
+            <td>The structure of neoan3 is intended to enable "top to bottom" reading, touching as little actual files as possible while maintaining separation.
+                neoan3 enables solid solutions and is highly scalable; however, rapid onboarding and being entry-level friendly is a necessity in today's industry.
+                In other words: it almost feels procedural while offering the benefits of OOP. <br>
+                This is most easily observable when looking at the <a href="{{base}}unicore-singleton">Unicore Singleton</a></td>
+        </tr>
+        <tr>
+            <td>MVC</td>
+            <td>Code separation makes sense! Even when not strictly MVC, most frameworks separate these concepts into what sometimes makes sense and sometimes is a folder-nightmare.</td>
+            <td>
+                neoan3 works component-based. While views & controllers are separate files, they share a folder.
+                At the same time, re-usability and accessibility of views, controllers or even whole components is ensured.
+                The hybrid approach also has no separation of front-end and back-end. This enables comfortable simultaneous development of business logic on components requiring a front- and back-end.
+                Based on experience, models are most likely to be used by multiple controllers. This is why models are structured secretly from components.
+            </td>
+        </tr>
+        <tr>
+            <td>Abstraction</td>
+            <td>
+                Varies greatly. Sometimes leads to a lot of overhead requiring unnecessary interfaces etc.
+            </td>
+            <td>neoan3 is "simple". Abstraction is intentionally kept outside of the business logic development.
+                Less experienced developers will be able to use an abstracted toolset quite easily,
+                while experienced developers will value the possibilities to influence even the most central functionality without touching the core (and therefore stay update-proof).
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
