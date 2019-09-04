@@ -1,7 +1,81 @@
 <section class="section">
-    <h1 class="title">cliTool</h1>
-    <h2 class="subtitle">subtitle</h2>
+    <h1 class="title">neoan3 cli tool</h1>
+    <h2 class="subtitle">Automation</h2>
     <p>
-        Create your content here. <a href="https://bulma.io/documentation">bulma documentation</a> will help.
+        The cli tool helps you greatly with development of neoan3 components & frames.
+        The full and current documentation can be found at <a href="https://www.npmjs.com/package/neoan3-cli">https://www.npmjs.com/package/neoan3-cli</a>.
+        Here we only want to go into a few important functions:
     </p>
+    <h2 class="subtitle has-margin">CLI-Templating</h2>
+    <p>Since neoan3 is highly customizable, creation of components can be influenced by templates.
+       Neoan3 does not require the use of the cli-tool, nor does the cli-tool require templates. <br>
+       This is why neoan3 currently does not ship with a folder _template by default. <br>
+        <strong>To use templating of neoan3-cli, create the folder <i>_template</i></strong>. <br>
+       In order to overwrite the way components are generated, we can now place template-files in this template folder.
+    </p>
+    <h3 class="is-size-5 has-margin">Example: Custom element as React component</h3>
+    <p>1. create <i>_template/ce.js</i></p>
+    <pre class="has-margin"><code class="code-block">
+        class {{name}} extends React.Component {
+            render() {
+                return &lt;h1>Hello, {this.props.name}&lt/h1>;
+            }
+        }
+    </code></pre>
+    <p class="has-margin">2. Run neoan3-cli:</p>
+    <code>neoan3 new component test</code>
+    <p>Select "Custom Element" when prompted</p>
+    <p class="has-margin">File component/test/test.ce.js:</p>
+    <pre class="has-margin"><code class="code-block">
+        class Test extends React.Component {
+            render() {
+                return &lt;h1>Hello, {this.props.name}&lt/h1>;
+            }
+        }
+    </code></pre>
+    <h2 class="subtitle has-margin">Migration</h2>
+    <p>The cli-tool creates, updates and executes neoan3 migration.json automatically.
+       Neoan3 assumes you are working with VCS and therefore expects a simple structure of your tables to be sufficient.
+        The cli-tool makes assumptions based on the model-names. <strong>The existence of a "TestModel", for instance,
+                                                                         would connect the model to tables "test" as well as "test_entry", should they exist. </strong>
+        <br>
+        Assuming
+    </p>
+    <h3 class="is-size-5 has-margin">Example: write TestModel migrate.json</h3>
+    <p class="has-margin">1. Create model (if not already existing)</p>
+    <code>neoan3 new model test</code>
+    <p class="has-margin">2. Create tables (if not already existing)</p>
+    <pre class="has-margin"><code class="code-block">
+        CREATE TABLE `test` (
+          `id` binary(16) NOT NULL PRIMARY KEY,
+          `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+          `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `delete_date` datetime DEFAULT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        CREATE TABLE `test_entry` (
+          `id` binary(16) NOT NULL PRIMARY KEY,
+          `test_id` binary(16) DEFAULT NULL,
+          `entry` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+          `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `delete_date` datetime DEFAULT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    </code></pre>
+    <p class="has-margin">3. Write migration</p>
+    <code>neoan3 migrate models down</code>
+    <h3 class="is-size-5 has-margin">Example: update database according to migrate.json changes</h3>
+    <p class="has-margin">When collaborating, using multiple databases, and/or using various branches, you can update your database in one simple step:</p>
+    <code>neoan3 migrate models up</code>
+    <h2 class="subtitle has-margin">Adding components/frames/models</h2>
+    <p>Collaboration is a <strong>huge topic</strong> in today's world.
+       Beginners might initially not see it, but between agile development, containerized solutions and GIT-branching strategies is a world full of unsolved pain points.
+        <br>The recommended approach of neoan3 collaboration can be described as <strong>"Everything but the core is a plugin"</strong>.
+       This means that all components/frames & models can be published (respecting their requirements & dependencies) as installable solutions either within a particular project or in other neoan3 projects.
+        <br>What that means in particular can be explored in <a href="{{base}}collaboration/">Working with teams</a>.
+       For simplicity, here we simply assume that you want to include an existing component, frame, or model.
+    </p>
+    <h3 class="is-size-5 has-margin">Example: include a model available as composer-package</h3>
+    <p class="has-margin">1. Include <a href="https://blua.blue">blua.blue's</a> image model</p>
+    <code>neoan3 add model blua-blue/image-model</code>
+    <p class="has-margin">2. Install/update MySQL tables</p>
+    <code>neoan3 migrate models up</code>
 </section>
