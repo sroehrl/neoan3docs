@@ -13,10 +13,13 @@ class Docs extends Serve
     function output($params = [])
     {
         $this->addHead('title',preg_replace('/[A-Z]/',' $0',ucfirst(current_endpoint)));
+        $this->includeElement('menu');
         $this->main = Ops::embraceFromFile('frame/docs/skeleton.html',[
             'content'=>$this->main,
-            'menu' => Ops::embraceFromFile('component/menu/menu.view.html',['base'=>base])
+            'menu' => Ops::embraceFromFile('component/menu/menu.view.html',['base'=>base]),
+            'base' => base
         ]);
+//        $this->main = preg_replace('/\n[\s]*/','',$this->main);
         parent::output($params);
     }
 
