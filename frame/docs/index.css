@@ -1,4 +1,8 @@
 @charset "UTF-8";
+/* colors */
+/* typography */
+/* tables */
+/* menu */
 .custom-menu {
   margin: 7px 3px 12px 7px;
   border-right: #00bdd6 1px solid;
@@ -7,6 +11,7 @@
   overflow: auto;
 }
 
+/* scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
 }
@@ -16,6 +21,7 @@
   border-radius: 10px;
 }
 
+/* main container */
 .main-content-container {
   min-height: 100vh;
   overflow: auto;
@@ -9165,7 +9171,6 @@ label.panel-block:hover {
 
 pre code {
   color: #00bdd6;
-  white-space: pre-line;
 }
 
 .has-margin {

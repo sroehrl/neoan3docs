@@ -18,7 +18,7 @@ class Docs extends Serve
             'menu' => Ops::embraceFromFile('component/menu/menu.view.html',['base'=>base]),
             'base' => base
         ]);
-        $this->main = preg_replace('/\n[\s]*/','',$this->main);
+//        $this->main = preg_replace('/\n/','',$this->main);
         parent::output($params);
     }
 
