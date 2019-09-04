@@ -1,7 +1,21 @@
+
 <div class="main">
+    <nav class="navbar has-background-primary is-hidden-tablet" role="navigation" aria-label="navigation">
+        <div class="navbar-brand">
+            <a href="{{base}}" class="navbar-item">neoan3 documentation</a>
+            <div id="burger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </div>
+        </div>
+
+    </nav>
     <div class="columns">
-        <div class="column is-narrow is-hidden-mobile">
-            {{menu}}
+        <div class="column is-narrow is-hidden-mobile " id="menu-container">
+            <div class="scrollable-container">
+                {{menu}}
+            </div>
 
         </div>
         <div class="column">
