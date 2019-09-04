@@ -1,7 +1,75 @@
 <section class="section">
-    <h1 class="title">prerequisites</h1>
-    <h2 class="subtitle">subtitle</h2>
+    <h1 class="title">Prerequisites</h1>
+    <h2 class="subtitle">Before you start</h2>
     <p>
-        Create your content here. <a href="https://bulma.io/documentation">bulma documentation</a> will help.
+        neoan3 uses common web technologies in order to facilitate a reliable yet simple setup.
+        We encourage local development ( and mention that in 2019 as neoan3's structure enables you to directly work on live systems ).
+        <br><br>
+        neoan3 is designed for Apache & Nginx but setup is easiest on Apache.
     </p>
+    <h2 class="subtitle has-margin">LAMP</h2>
+    <div class="panel">
+        <p class="panel-heading">Tech</p>
+
+        <div class="panel-block">
+            Linux (Ubuntu, amazonLinux, CentOS, ...)
+        </div>
+        <div class="panel-block">
+            Apache
+        </div>
+        <div class="panel-block">
+            MySQL or MariaDB
+        </div>
+        <div class="panel-block">
+            PHP7 (min. 7.2 recommended)
+        </div>
+        <div class="panel-block">
+            PHPUnit (optional, recommended on local system only)
+        </div>
+        <div class="panel-block">
+            <a target="_blank" class="button is-link is-outlined is-fullwidth" href="https://www.apachefriends.org/de/download.html">
+                Xampp for Windows
+            </a>
+            <a target="_blank" class="button is-link is-outlined is-fullwidth" href="https://www.linode.com/docs/web-servers/lamp/install-lamp-stack-on-ubuntu-18-04/">
+                Installation guide Ubuntu
+            </a>
+            <a target="_blank" class="button is-link is-outlined is-fullwidth" href="https://pchelp.ricmedia.com/setup-lamp-server-raspberry-pi-3-complete-diy-guide/3/">
+                Installation guide Raspberry Pi
+            </a>
+        </div>
+    </div>
+    <div class="notification is-warning">
+        <strong>NOTE:</strong>
+        neoan3 has not been tested on WAMP or MAMP.
+    </div>
+    <h2 class="subtitle has-margin">Installed tools</h2>
+    <div class="panel">
+        <p class="panel-heading">Software</p>
+        <div class="panel-block">
+            <a target="_blank" href="https://getcomposer.org/">Composer</a>
+        </div>
+        <div class="panel-block">
+            <a target="_blank" href="https://git-scm.com/downloads">GIT</a>
+        </div>
+        <div class="panel-block">
+            <a target="_blank" href="https://nodejs.org/en/download/">nodeJs & npm</a>
+        </div>
+    </div>
+    <article class="message has-margin">
+        <div class="message-header">
+            <p>Ensure PATH variable</p>
+        </div>
+        <div class="message-body has-text-white">
+            Make sure all commands work properly and are added to PATH. <br>
+            <code>composer -V</code><br>
+            <code>git --version</code><br>
+            <code>node -v</code><br>
+            <code>npm -v</code>
+
+        </div>
+    </article>
+    <h2 class="subtitle has-margin">The cli tool</h2>
+    <p>While you do not need neoan3-cli, it helps you a lot. After installation of npm, install the tool by running <code>npm i -g neoan3-cli</code>.
+    </p>
+    <a href="{{base}}cli-tool/" class="button is-outlined is-primary">learn more</a>
 </section>
