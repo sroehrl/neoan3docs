@@ -1,0 +1,73 @@
+<section class="section" xmlns="http://www.w3.org/1999/html">
+    <h1 class="title">Templating</h1>
+    <h2 class="subtitle">Creating the view</h2>
+    <p class="has-margin">
+        Whether you use the neoan3 cli tool, or you create your own component using your IDE, a view for the user is
+        important.
+        That's where templating comes in, and with neoan3 it's easy to create and route to your view.
+    </p>
+
+    <h2 class="subtitle">Creating a view with neoan3 cli tool</h2>
+    <p>Views are easy to create with the neoan3 cli tool. After opening your favorite terminal, you simply type:</p>
+    <code>
+        neoan3 new component home
+    </code>
+    <p class="has-margin">
+        The cli tool will ask the following questions:
+    </p>
+    <code class="code-block">
+        ? This component mainly serves as: (Use arrow keys)
+        >Route component
+        API endpoint
+        Custom Element
+    </code>
+    <p>Select <strong>Route component</strong></p>
+    <code>
+        ? Do you want to create a view (Y/n)
+    </code>
+    <p>Type <strong>y for yes</strong></p>
+    <code>
+        ? do you want to use a frame? (Y/n)
+    </code>
+    <h4 class="has-margin has-background-success is-two-thirds">
+        <strong>NOTE:</strong> For more details about Frames please review <a href="{{base}}frame/">
+        <strong>Frames</strong></a>
+    </h4>
+    <p>For now we will assume that we have a frame called <strong>Test</strong> Type <strong>y for yes</strong></p>
+    <code class="code-block">
+        ? Which frame are you using? (Use arrow keys)
+        > test
+    </code>
+    <p>Hit <strong>Enter</strong> on your keyboard to select that frame</p>
+    <code class="code-block">
+        writing...
+        using html-template...
+        Component test created
+    </code>
+    <p class="has-margin">Success! You have your first route component.</p>
+
+    <h3>Creating a view without neoan3 cli tool</h3>
+    <p>
+        There are some considerations to be made when creating them without the neoan3 cli tool. All
+        views are contained in the same folder as their relevant component. In that regard a 'home' folder could conceivably
+        have the following files:
+    </p>
+    <div class="has-margin">
+        <p class="">1. Home.ctrl.php</p>
+        <p class="">2. home.view.html</p>
+    </div>
+    <p>
+        As you see, the name of the view should have the following format:
+    </p>
+    <code>
+        {{componentName}}.view.html
+    </code>
+    <p>This guarantees that the routing, which is taken care of by the ctrl.php file, will direct a user to the appropriate view.</p>
+
+    <h2 class="subtitle has-margin">Routing to a view</h2>
+    <p>
+        Routing to a view is very simple in neoan3, especially using the neaon3 cli tool. The
+        <a href="{{base}}route-component/"><strong>Route Component</strong></a> section will detail further what a Route
+        component is.
+    </p>
+</section>
