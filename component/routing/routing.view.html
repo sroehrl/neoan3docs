@@ -1,0 +1,61 @@
+<section class="section">
+    <h1 class="title">Routing</h1>
+    <h2 class="subtitle">General routing</h2>
+    <p>
+        Neoan3 has made the process of routing easy for fast development. Whether you're creating a route for a
+        <a href="{{base}}routing-web/"><strong>web page</strong></a>, an <a href="{{base}}routing-api/"><strong>API</strong></a>
+        or to include <a href="{{base}}routing-node-module/"><strong>a node & custom elements</strong></a> neoan3 has a strategy.
+    </p>
+    <h2 class="subtitle has-margin">Principals of routing</h2>
+    <p>
+        As Neoan3 is a PHP based framework, routing is handled through the PHP controller in a target component's folder.
+        As an example, the following route component named home results in routing for a web page. <strong>Note:</strong>
+        While the following is a basic example of routing, please review the full explanation of routing to a
+        <a href="{{base}}routing-web/"><strong>web page</strong></a>.
+    </p>
+    <pre class="has-margin">
+    <code class="code-block">
+    home (component folder)
+        |
+        Home.ctrl.php
+        home.view.html
+    </code>
+    </pre>
+
+    <p class="has-margin">
+        As you see above, the home.view.html has a companion Home.ctrl.php which handles routing. If you're using the
+        neoan3 cli tool this step is easy, however let us take a look at the default routing necessary to be able to
+        navigate to our home.view.html in a web browser.
+    </p>
+    <pre class="has-margin">
+        <code class="code-block">
+            namespace Neoan3\Components;
+
+            use Neoan3\Core\Unicore;
+
+            class Home extends Unicore
+            {
+                function init()
+                {
+                    $this->uni('docs')->hook('main','home')->output();
+                }
+
+            }
+        </code>
+    </pre>
+    <p class="has-margin">
+        While there is a lot to unpack from the above the essential thing to understand is that the routing is placing
+        the 'home' view specified in the hook into 'main'. Neoan3 will look for a local home.view.html to refer to for
+        routing. This would yield a slug to your localhost if you are running this locally.
+    </p>
+    <code>
+        http://localhost/myProject/home
+    </code>
+    <h2 class="subtitle has-margin">But what handles routing?</h2>
+    <p class="has-margin">
+        At the core of neoan3 is Route.php. While I could go line by line, it's equally important to understand the
+        principals of how to trigger it's usage. There is a thorough explanation for each type of route. Be aware that
+        each use case for a route requires it's own methodology and interaction with a ctrl.php.
+    </p>
+
+</section>
