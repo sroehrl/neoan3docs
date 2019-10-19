@@ -64,18 +64,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroehrl/neoan3-ops.git",
-                "reference": "07938910e94d4023fd41fc9a9feebe177b628757"
+                "reference": "b0f1e2b988b724fe4428d639bfcefa858302877a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroehrl/neoan3-ops/zipball/07938910e94d4023fd41fc9a9feebe177b628757",
-                "reference": "07938910e94d4023fd41fc9a9feebe177b628757",
+                "url": "https://api.github.com/repos/sroehrl/neoan3-ops/zipball/b0f1e2b988b724fe4428d639bfcefa858302877a",
+                "reference": "b0f1e2b988b724fe4428d639bfcefa858302877a",
                 "shasum": ""
             },
             "require": {
+                "ext-dom": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.3"
             },
             "type": "library",
             "autoload": {
@@ -84,8 +88,11 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "description": "neoan3 common string operations helper class",
-            "time": "2019-08-16T20:56:56+00:00"
+            "time": "2019-09-29T14:38:29+00:00"
         }
     ],
     "packages-dev": [],
