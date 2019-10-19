@@ -1,0 +1,83 @@
+<section class="section">
+    <h1 class="title">Neoan3 Frame</h1>
+    <h2 class="subtitle">Settings for your project</h2>
+    <p>
+        At the heart of Neoan3's ideology is abstraction. Abstraction empowers creators to hone in on an ongoing issue
+        without having to review thousands of lines of code that has nothing to do with it. Frames allow for global
+        control over the project. Whenever routing in a ctrl.php file, you declare the frame that the component uses.
+    </p>
+
+    <h2 class="subtitle has-margin">How to create a frame</h2>
+    <p>
+        Much like with anything in Neoan3 it's easier to use the neoan3-cli tool. Using the following command will
+        generate a new frame:
+    </p>
+    <code class="code-block">
+        neoan3 new frame [frame-name]
+    </code>
+    <h2 class="subtitle has-margin">How to use a Frame</h2>
+    <p>
+        The new frame will appear in the "frame" folder in the project. Typically the folder will contain a php file
+        with the name that you gave the frame. The file itself will not contain a lot of code in the beginning. With the
+        exception of a single empty class extending Serve. While this seems anti-climactic, what is important is that
+        your frame has now been set up to serve up information to Neoan3.
+    </p>
+    <br/>
+    <p>
+        As an example, let's set up a component named Test.
+    </p>
+    <pre>
+        <code class="code-block">
+    namespace Neoan3\Frame;
+            use Neoan3\Apps\Ops;
+            use Neoan3\Core\Serve;
+
+
+            class Test extends Serve
+            {
+
+                function output($params = [])
+                {
+                    $this->addHead('title',preg_replace('/[A-Z]/',' $0',ucfirst(current_endpoint)));
+                    $this->main = Ops::embraceFromFile('frame/test/skeleton.html',[
+                        'content'=>$this->main,
+                        'menu' => Ops::embraceFromFile('component/menu/menu.view.html',['base'=>base]),
+                        'base' => base
+                    ]);
+                    parent::output($params);
+                }
+
+                function constants()
+                {
+                    return [
+                        'base' => [base],
+                        'link' => [
+                            [
+                                'sizes' => '32x32',
+                                'type' => 'image/png',
+                                'rel' => 'icon',
+                                'href' => 'asset/neoan-favicon.png'
+                            ]
+                        ],
+                        'js' => [
+                            ['src' => path .'/frame/test/main.js', 'data' => ['base' => base]]
+                        ],
+                        'meta'       => [
+                            ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']
+                        ],
+                        'stylesheet' => [
+                            '' . base . 'frame/test/index.css',
+                        ]
+                    ];
+                }
+            }
+        </code>
+    </pre>
+    <p>
+        As you see from the above we have set up the component so that way it will not only have the title reflect in
+        head tag the name of the component. In addition, we've set up the view for the menu so it appears on every web
+        page. In addition, we've set up a constants function. These constants set up base as a value, the favicon for
+        site, the JavaScript, meta tag and the stylesheet. Now every component can have their own style and JavaScript
+        files, however when making global changes the Frame is where to go.
+    </p>
+</section>
