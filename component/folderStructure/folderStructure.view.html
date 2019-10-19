@@ -1,0 +1,153 @@
+<section class="section">
+    <h1 class="title">Folder Structure</h1>
+    <h2 class="subtitle">Neoan3 foundation</h2>
+    <p>
+        Much like other frameworks Neoan3 has a specific folder structure that acts as the foundation to your project.
+        While it may seem complex at first it's actually quite simple.
+    </p>
+
+    <h2 class="subtitle has-margin">Folder Structure Overview</h2>
+    <p>Below is a list of all of the files that you would typically see in a Neoan3 projects.</p>
+    <div class="has-margin">
+
+        <p><a href="{{base}}folder-structure/#neoan">1. _neoan</a></p>
+        <p><a href="{{base}}folder-structure/#template">2. _template</a></p>
+        <p><a href="{{base}}folder-structure/#asset">3. asset</a></p>
+        <p><a href="{{base}}folder-structure/#component">4. component</a></p>
+        <p><a href="{{base}}folder-structure/#frame">5. frame</a></p>
+        <p><a href="{{base}}folder-structure/#model">6. model</a></p>
+        <p><a href="{{base}}folder-structure/#vendor">7. vendor</a></p>
+        <p><a href="{{base}}folder-structure/#rlf">8. root level files</a></p>
+    </div>
+
+    <h2 class="subtitle has-margin" id="neoan">_neoan</h2>
+    <p>
+        This is the heart of Neoan3. Admittedly there isn't much of a reason to actually manipulate these files. Set up
+        has already been taken care of for you and anything that needs to be customized specifically for this project
+        exists somewhere else.
+
+        Each file in _neoan could very well be it's own web page, so I inspire all of you to take some time and read
+        through this folder. While it's not necessary in order to use the Framework, understanding how things work
+        under-the-hood will allow for greater control over yoru project.
+    </p>
+
+    <h2 class="subtitle has-margin" id="template">_template</h2>
+    <p>
+        You can influence the generated output with templates. To do so, place a folder _template in your project. Basic
+        variable support works with double curly braces without spaces ( {{example}} ) The following files are
+        respected:
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Template File</th>
+                <th>Entity</th>
+                <th>Vairable</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    api.php
+                </th>
+                <td>component (API)</td>
+                <td>name, frame</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>
+                     route.php
+                </th>
+                <td>component (Route)</td>
+                <td>name, frame</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>
+                    view.html
+                </th>
+                <td>component (Route)</td>
+                <td>name</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>
+                    ce.php
+                </th>
+                <td>Custom element</td>
+                <td>name</td>
+                <td>*PHP files for custom element is only generated if template is present</td>
+            </tr>
+            <tr>
+                <th>
+                    ce.js
+                </th>
+                <td>Custom element</td>
+                <td>name</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>
+                    ce.html
+                </th>
+                <td>Custom element</td>
+                <td>name</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>
+                    transformer.php
+                </th>
+                <td>Model transformer</td>
+                <td>name, structure</td>
+                <td>*Transformer usage requires neoan3-apps/transformer</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="subtitle has-margin" id="asset">asset</h2>
+    <p>
+        Simply put this contains all of the assets you would use on your site. Examples of this would be your favicon,
+        images, files to be downloaded and svg's.
+    </p>
+
+    <h2 class="subtitle has-margin" id="component">component</h2>
+    <p>
+        This is where most of the work is going to be done. This contains every component
+        <a href="{{base}}types/"><strong>type</strong></a> that you are using for your project.
+    </p>
+
+    <h2 class="subtitle has-margin" id="frame">frame</h2>
+    <p>
+        <a href="{{base}}frames/"><strong>Frames</strong></a> are a unique and vital piece to a Neoan3. Frames set up
+        the primary styling, HTML, JavaScript. Using PHP it creates a primary location for the projects link tags,
+        scripts, and any JavaScript that you need to run regardless of what component you're in.
+    </p>
+
+    <h2 class="subtitle has-margin" id="model">model</h2>
+    <p>
+        While this folder won't be as used as much as the component folder it's purpose is vital. This contains the
+        model.php for various components. Not every component needs a model, what's vital though to remember is that a
+        model stands as a way to query the database for information. This is meant to be used across many different
+        ctrl.php files. For example, Users.model.php could be used in user.ctrl.php but there is a case where a component
+        named profile.ctrl.php may utilize it as well to gather the needed user information without needlessly creating
+        a Profile.model.php.
+    </p>
+
+    <h2 class="subtitle has-margin" id="vendor">vendor</h2>
+    <p>
+        Albeit that this is not a folder that is present in the default Neoan3 folders, it is a file that appears
+        during composer installation and helps supports Neoan3 and it's apps.
+    </p>
+
+    <h2 class="subtitle has-margin" id="rlf">Root Level Files</h2>
+    <p>
+        Many of the files contained on the root level will not be manipulated during the course of the project.
+        Depending on what else you install in Neoan3 the files here may or may not change. But what remains as an
+        important piece is the .htaccess file. During the Neoan3 installation process the Rewritebase portion of this
+        file will be updated to the name of the project itself. However should there needed to be a an update this is
+        the file that is often changed.
+    </p>
+
+</section>
