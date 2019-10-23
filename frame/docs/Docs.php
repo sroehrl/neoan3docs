@@ -12,30 +12,34 @@ class Docs extends Serve
 
     function output($params = [])
     {
-        $this->addHead('title',preg_replace('/[A-Z]/',' $0',ucfirst(current_endpoint)));
-        $this->main = Ops::embraceFromFile('frame/docs/skeleton.html',[
-            'content'=>$this->main,
-            'menu' => Ops::embraceFromFile('component/menu/menu.view.html',['base'=>base]),
-            'base' => base
+        $this->addHead('title', preg_replace('/[A-Z]/', ' $0', ucfirst(current_endpoint)));
+        $this->main = Ops::embraceFromFile('frame/docs/skeleton.html', [
+            'content' => $this->main,
+            'menu'    => Ops::embraceFromFile('component/menu/menu.view.html', ['base' => base]),
+            'base'    => base
         ]);
-//        $this->main = preg_replace('/\n/','',$this->main);
+        //        $this->main = preg_replace('/\n/','',$this->main);
         parent::output($params);
     }
 
     function constants()
     {
         return [
-            'base' => [base],
-            'link' => [
+            'base'       => [base],
+            'link'       => [
                 [
                     'sizes' => '32x32',
-                    'type' => 'image/png',
-                    'rel' => 'icon',
-                    'href' => 'asset/neoan-favicon.png'
+                    'type'  => 'image/png',
+                    'rel'   => 'icon',
+                    'href'  => 'asset/neoan-favicon.png'
+                ],
+                [
+                    'rel' => 'manifest', 'href' => base .'neoan3-pwa/manifest/neoan3-docs'
                 ]
             ],
-            'js' => [
-                ['src' => path .'/frame/docs/main.js', 'data' => ['base' => base]]
+            'js'         => [
+                ['src' => path . '/frame/docs/main.js', 'data' => ['base' => base]],
+                ['src' => base . 'neoan3-pwa/register/neoan3-docs']
             ],
             'meta'       => [
                 ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']
