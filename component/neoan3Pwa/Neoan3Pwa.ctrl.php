@@ -35,10 +35,10 @@ class Neoan3Pwa extends Unicore
     {
         $manifest = [
             'name'      => sub(2),
-            //            'icons' => $icons,
-            'start_url' => '/',
+            'icons' => [['src'=>base.'component/neoan3Pwa/n3.png','type'=>'image/png','sizes'=>'512x512']],
+            'start_url' => base,
             'display'   => 'standalone',
-            'scope'     => '/'
+            'scope'     => base
         ];
         header('Content-Type: application/json');
         echo json_encode($manifest, JSON_UNESCAPED_SLASHES);

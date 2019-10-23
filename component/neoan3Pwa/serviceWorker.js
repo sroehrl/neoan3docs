@@ -6,7 +6,6 @@ self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function(cache) {
-                console.log('Opened cache');
                 return cache.addAll(urlsToCache);
             })
     );
@@ -24,7 +23,7 @@ self.addEventListener('fetch', function(event) {
                         if(!response || response.status !== 200 || response.type !== 'basic') {
                             return response;
                         }
-                        var responseToCache = response.clone();
+                        let responseToCache = response.clone();
 
                         caches.open(CACHE_NAME)
                             .then(function(cache) {
