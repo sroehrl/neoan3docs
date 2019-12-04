@@ -93,6 +93,7 @@
             ],
             "description": "neoan3 common string operations helper class",
             "time": "2019-09-29T14:38:29+00:00"
+
         },
         {
             "name": "sroehrl/neoan3Pwa",
@@ -129,6 +130,7 @@
                 "issues": "https://github.com/sroehrl/neoan3Pwa/issues"
             },
             "time": "2019-10-23T16:32:37+00:00"
+
         }
     ],
     "packages-dev": [],
