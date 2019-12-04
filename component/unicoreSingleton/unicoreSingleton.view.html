@@ -12,24 +12,23 @@
         There are multiple methods of interest that can be chained to the singleton.
     </p>
 
-<pre>
-<code class="code-block">
-namespace Neoan3\Components;
+    <pre class="has-margin"><code class="code-block">
 
-use Neoan3\Core\Unicore;
+        namespace Neoan3\Components;
 
-class UnicoreSingleton extends Unicore
-{
-    function init()
-    {
-        $this->uni('docs')
-             ->hook('main','unicoreSingleton')
-             ->output();
-    }
+        use Neoan3\Core\Unicore;
 
-}
-</code>
-</pre>
+        class UnicoreSingleton extends Unicore
+        {
+            function init()
+            {
+                $this->uni('docs')
+                     ->hook('main','unicoreSingleton')
+                     ->output();
+            }
+
+        }
+    </code></pre>
 
     <h3 class="subtitle has-margin">Hook</h3>
     <p>
