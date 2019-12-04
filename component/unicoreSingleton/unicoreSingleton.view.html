@@ -1,0 +1,99 @@
+<section class="section">
+    <h1 class="title">Unicore Singleton</h1>
+    <h2 class="subtitle">Tapping into the power of the Unicore</h2>
+    <p>
+        The singleton is initiated in a route component by executing the following with a particular frame:
+    </p>
+    <code>
+        $this->uni('test')
+    </code>
+    <h2 class="subtitle has-margin">Useful methods</h2>
+    <p>
+        There are multiple methods of interest that can be chained to the singleton.
+    </p>
+
+<pre>
+<code class="code-block">
+namespace Neoan3\Components;
+
+use Neoan3\Core\Unicore;
+
+class UnicoreSingleton extends Unicore
+{
+    function init()
+    {
+        $this->uni('docs')
+             ->hook('main','unicoreSingleton')
+             ->output();
+    }
+
+}
+</code>
+</pre>
+
+    <h3 class="subtitle has-margin">Hook</h3>
+    <p>
+        The hook helps to indicate what part of the frame to target and what view to use. Optionally you can even take
+        in an array of substitutions declared in the view by double-curly braces. Example:
+    </p>
+<pre>
+<code class="code-block">
+$this->uni->hook('main', 'test');
+//src/test/test.view.html will hook into the frame's main-hook
+</code>
+</pre>
+    <p>
+        Typically, the view passed as a parameter will be the view.html that is local to the ctrl.php.
+    </p>
+
+    <h2 class="subtitle has-margin">addHead</h2>
+    <p>
+        addHead has two parameters "what" and "obj". "what" indicates what you want to add to the head tag of the html.
+        For instance, If you pass "title", you can pass an "obj" that will indicate what appears in the title tag.
+    </p>
+<pre>
+<code class="code-block">
+->addHead('title', isset($this->content['name']) ? $this->content['name'] : 'Overview')
+</code>
+</pre>
+
+    <h2 class="subtitle has-margin">addController</h2>
+    <p>
+        addController is a method that by it's namesake allows you to add a controller. This is useful when there is a
+        function in another ctrl.php file that you would use in the current one. The parameter is simple and takes only
+        the name of the controller.
+    </p>
+<pre>
+<code class="code-block">
+->addController('profile')
+</code>
+</pre>
+
+    <h2 class="subtitle has-margin">Callback</h2>
+    <p>
+        Callback adds the ability to run a function simply by adding the name of the function as a parameter.
+    </p>
+<pre>
+<code class="code-block">
+->callback($this, 'getContext')
+//parameters(context, function)
+...
+...
+function getContext()
+{
+    //do something
+}
+</code>
+</pre>
+
+    <h2 class="subtitle has-margin">Output</h2>
+    <p>
+        Output simply compiles the files & responds (echoes) to the client. The parameter isn't necessary but you can
+        add a string or array of pre-compiling function(s). Typically this is also at the end of a singleton.
+    </p>
+<pre>
+<code class="code-block">
+->output();
+</code>
+</pre>
+</section>
