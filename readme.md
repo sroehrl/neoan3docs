@@ -1,3 +1,7 @@
+# WELCOME HACKTOBERFEST
+
+Writing documentation is a good way to get your feet wet in the open source world. We appreciate any interest & engagement.
+
 # neoan3 Documentation
 
 These docs are intended to provide documentation for neoan3
