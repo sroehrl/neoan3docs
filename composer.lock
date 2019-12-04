@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94d144088603253f2592f78def336720",
+    "content-hash": "10c9aa39396b2879ec9a8f8c115e8d4e",
     "packages": [
         {
             "name": "mnsami/composer-custom-directory-installer",
@@ -64,18 +64,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroehrl/neoan3-ops.git",
-                "reference": "07938910e94d4023fd41fc9a9feebe177b628757"
+                "reference": "b0f1e2b988b724fe4428d639bfcefa858302877a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroehrl/neoan3-ops/zipball/07938910e94d4023fd41fc9a9feebe177b628757",
-                "reference": "07938910e94d4023fd41fc9a9feebe177b628757",
+                "url": "https://api.github.com/repos/sroehrl/neoan3-ops/zipball/b0f1e2b988b724fe4428d639bfcefa858302877a",
+                "reference": "b0f1e2b988b724fe4428d639bfcefa858302877a",
                 "shasum": ""
             },
             "require": {
+                "ext-dom": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.3"
             },
             "type": "library",
             "autoload": {
@@ -84,15 +88,55 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "description": "neoan3 common string operations helper class",
-            "time": "2019-08-16T20:56:56+00:00"
+            "time": "2019-09-29T14:38:29+00:00"
+        },
+        {
+            "name": "sroehrl/neoan3Pwa",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroehrl/neoan3Pwa.git",
+                "reference": "43df871aeb057ec9e97ac9b9a5df387787f14bad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroehrl/neoan3Pwa/zipball/43df871aeb057ec9e97ac9b9a5df387787f14bad",
+                "reference": "43df871aeb057ec9e97ac9b9a5df387787f14bad",
+                "shasum": ""
+            },
+            "require": {
+                "mnsami/composer-custom-directory-installer": "1.1.*",
+                "neoan3-apps/ops": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "installer-paths": {
+                    "./frame/{$name}": [],
+                    "./model/{$name}": [],
+                    "./component/{$name}": []
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple neoan3 PWA helper",
+            "support": {
+                "source": "https://github.com/sroehrl/neoan3Pwa/tree/master",
+                "issues": "https://github.com/sroehrl/neoan3Pwa/issues"
+            },
+            "time": "2019-10-23T16:32:37+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "neoan3-apps/ops": 20
+        "neoan3-apps/ops": 20,
+        "sroehrl/neoan3pwa": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
