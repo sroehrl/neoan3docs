@@ -6,7 +6,8 @@
         "php": "^5.6 || ^7.0",
         "ext-json": "*",
         "mnsami/composer-custom-directory-installer": "1.1.*",
-        "neoan3-apps/ops": "dev-master"
+        "neoan3-apps/ops": "dev-master",
+        "sroehrl/neoan3Pwa": "dev-master"
     },
     "license": "MIT",
     "authors": [
@@ -17,9 +18,17 @@
     ],
     "extra": {
         "installer-paths": {
-            "./frame/{$name}":[],
-            "./model/{$name}":[],
-            "./component/{$name}":[]
+            "./frame/{$name}": [],
+            "./model/{$name}": [],
+            "./component/{$name}": [
+                "sroehrl/neoan3Pwa"
+            ]
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/sroehrl/neoan3Pwa.git"
+        }
+    ]
 }
