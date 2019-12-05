@@ -2,46 +2,132 @@
     <h1 class="title">Unicore Singleton</h1>
     <h2 class="subtitle">Tapping into the power of the Unicore</h2>
     <p>
-        The singleton is initiated in a route component by executing the following with a particular frame:
+        When you create components using the cli without a template for the controller, you might notice the major
+        difference between a route-component and a api-component starts at what the class extends:
     </p>
-    <code>
-        $this->uni('test')
-    </code>
-    <h2 class="subtitle has-margin">Useful methods</h2>
+    <h3 class="subtitle has-margin">Default route-component:</h3>
+    <pre><code class="code-block">
+        &lt;?php
+
+        namespace Neoan3\Components;
+
+        use Neoan3\Core\Unicore;
+
+        class MyComponent extends Unicore
+    </code></pre>
+    <h3 class="subtitle has-margin">Default API-component:</h3>
+    <pre><code class="code-block">
+        &lt;?php
+
+        namespace Neoan3\Components;
+
+        use Neoan3\Frame\MyFrame;
+
+        class MyComponent extends MyFrame
+    </code></pre>
+    <p class="has-margin">
+        However, this is only the case because the use of the Unicore singleton is implied.
+        Depending on your style, a route-component can look like this:
+    </p>
+    <pre><code class="code-block">
+        &lt;?php
+
+        namespace Neoan3\Components;
+
+        use Neoan3\Frame\MyFrame;
+
+        class MyComponent extends MyFrame
+        {
+            function init()
+            {
+                // load "component/myComponent/myComponent.view.html" into the main hook of frame "MyFrame"
+                $this->hook('main', 'myComponent');
+                // render/output page
+                $this->output();
+            }
+        }
+    </code></pre>
+    <p class="has-margin">
+        In the above scenario, your controller extends your frame which extends the core's Serve class.
+        The advantage of that pattern is a small performance boost as no other assumptions or file-inclusions are made.
+        <br>The disadvantage is that associated files (like <code>component/myComponent/myComponent.ctrl.js</code> or
+        <code>component/myComponent/myComponent.style.css</code>) are not automatically included when present.
+        Additionally, the used frame cannot be dynamic but is hard-coded into the class.
+        This binds the component to a certain frame which might be of importance for reusability considerations. <br>
+        The Unicore singleton generates a wrapper around the business logic and "forces" the developer to write logic in
+        what we call "stream-of-consciousness":
+    </p>
+    <pre><code class="code-block">
+        &lt;?php
+
+        namespace Neoan3\Components;
+
+        use Neoan3\Core\Unicore;
+
+        class MyComponent extends Unicore
+        {
+            function init()
+            {
+                // initiate a particular frame (this can be dynamic e.g. via SESSION, GET, SERVER etc)
+                $this->uni('myFrame')
+
+                // we now have a singleton including methods inherited from the frame as well as from the core
+                // and files in the same folder ending in 'ctrl.js' and 'view.html' are included (NOTE: file extensions can be set differently)
+                // let's load a template for the body's main part:
+                     ->hook('main', 'myComponent')
+
+                // and output the page
+                     ->output();
+            }
+        }
+    </code></pre>
+    <p class="has-margin">
+        By adding public functions into your frame, you can add functionality to the singleton or overwrite the following methods:
+    </p>
+    <h2 class="title">Important methods</h2>
     <p>
         There are multiple methods of interest that can be chained to the singleton.
     </p>
 
-<pre>
-<code class="code-block">
-namespace Neoan3\Components;
-
-use Neoan3\Core\Unicore;
-
-class UnicoreSingleton extends Unicore
-{
-    function init()
-    {
-        $this->uni('docs')
-             ->hook('main','unicoreSingleton')
-             ->output();
-    }
-
-}
-</code>
-</pre>
-
-    <h3 class="subtitle has-margin">Hook</h3>
-    <p>
+    <h3 class="subtitle has-margin">hook</h3>
+    <p class="has-margin">
         The hook helps to indicate what part of the frame to target and what view to use. Optionally you can even take
-        in an array of substitutions declared in the view by double-curly braces. Example:
+        in an array of substitutions declared in the view by double-curly braces. <br>
+        Standard hooks are
+
     </p>
-<pre>
-<code class="code-block">
-$this->uni->hook('main', 'test');
-//src/test/test.view.html will hook into the frame's main-hook
-</code>
-</pre>
+    <div class="content">
+        <ul>
+            <li>header</li>
+            <li>main</li>
+            <li>footer</li>
+        </ul>
+    </div>
+    <p>The underlying structure is:</p>
+    <pre><code class="code-block">
+        &lt;!doctype html>&lt;html>
+        &lt;head>%7B%7Bhead}}&lt;/head>
+        &lt;body>
+        &lt;style>%7B%7BimportedStyles}}%7B%7Bstyle}}&lt;/style>
+
+        &lt;header>&lt;!-- header hook -->&lt;/header>
+        &lt;neoan-root>&lt;!-- entry-point for SPA use -->&lt;/neoan-root>
+
+        &lt;!-- main hook -->
+
+        &lt;footer>&lt;!-- footer hook -->&lt;/footer>
+
+        &lt;!-- additional scripts & module-loading -->
+        &lt;/body>&lt;/html>
+    </code></pre>
+    <p class="has-margin">
+        The reason you won't see anything other then "main" used in all examples is due to the fact that default
+        header & footer are addressed on the frame level rather than on the component level. Example in init():
+    </p>
+    <pre><code class="code-block">
+        // src/test/test.view.html will hook into the frame's main-hook and substitute "{{title}}" with the value of $title
+        $this->uni->hook('main', 'test', ['title' => $title]);
+    </code></pre>
     <p>
         Typically, the view passed as a parameter will be the view.html that is local to the ctrl.php.
     </p>
@@ -49,51 +135,97 @@ $this->uni->hook('main', 'test');
     <h2 class="subtitle has-margin">addHead</h2>
     <p>
         addHead has two parameters "what" and "obj". "what" indicates what you want to add to the head tag of the html.
-        For instance, If you pass "title", you can pass an "obj" that will indicate what appears in the title tag.
+        For instance, If you pass "title", you can pass an "obj" that will indicate what appears in the title tag. Possible values are:
     </p>
-<pre>
-<code class="code-block">
-->addHead('title', isset($this->content['name']) ? $this->content['name'] : 'Overview')
-</code>
-</pre>
+    <div class="content">
+        <ul>
+            <li>link (accepts assoc-array)</li>
+            <li>base (accepts string)</li>
+            <li>title (accepts string)</li>
+            <li>meta (accepts assoc-array)</li>
+        </ul>
+    </div>
+    <pre><code class="code-block">
+        ...
+        ->addHead('title', isset($this->content['name']) ? $this->content['name'] : 'Overview')
+        ->addHead('meta', ['name' => 'robots', 'content' => 'noindex,nofollow'])
+        ...
+    </code></pre>
+    <p class="has-margin">Note that most of these values can be set </p>
 
-    <h2 class="subtitle has-margin">addController</h2>
-    <p>
-        addController is a method that by it's namesake allows you to add a controller. This is useful when there is a
-        function in another ctrl.php file that you would use in the current one. The parameter is simple and takes only
-        the name of the controller.
+    <h2 class="subtitle has-margin">addStylesheet</h2>
+    <p class="has-margin">
+        Based on the origin of the file stylesheets are either included into the DOM's style tag or external includes.
     </p>
-<pre>
-<code class="code-block">
-->addController('profile')
-</code>
-</pre>
+    <pre><code class="code-block">
+        ...
+        // external stylesheets are included with @import
+        ->addStylesheet('//some-cool-css-framework.com/style.min.js')
 
-    <h2 class="subtitle has-margin">Callback</h2>
-    <p>
-        Callback adds the ability to run a function simply by adding the name of the function as a parameter.
+        // content of local stylesheet is written to style-tag
+        ->addStylesheet(base . 'asset/style.css')
+        ...
+    </code></pre>
+    <h2 class="subtitle has-margin">callback</h2>
+    <p class="has-margin">
+        To include additional functionality, the callback-method is a useful way to indicate when functionality outside the stream-of-consciousness is executed
     </p>
-<pre>
-<code class="code-block">
-->callback($this, 'getContext')
-//parameters(context, function)
-...
-...
-function getContext()
-{
-    //do something
-}
-</code>
-</pre>
+    <pre><code class="code-block">
+        public $greeting;
 
-    <h2 class="subtitle has-margin">Output</h2>
-    <p>
+        function init()
+        {
+            $this->uni()
+                 ->callback($this, 'getGreeting')
+                 ->hook('main', ['greeting' => $this->greeting])
+                 ->output();
+        }
+
+        function getGreeting($context)
+        {
+            $hour = date('H');
+            switch($hour){
+                case $hour < 12: $context->greeting = 'good morning'; break;
+                case $hour > 11 && $hour < 18: $context->greeting = 'good afternoon'; break;
+                case $hour > 17: $context->greeting = 'good evening'; break;
+            }
+        }
+    </code></pre>
+
+    <h2 class="subtitle has-margin">includeElement, includeJs, includeJsModule</h2>
+    <p class="has-margin">
+        neoan3 has the unique ability to serve js-modules with dynamic content. Please read <a href="{{base}}custom-component/">custom component</a>
+        for more information on how to use this capability in order to work with web components, custom elements or front-end frameworks like vueJS, react or polymer.
+        In general, includeElement is used for neoan3 custom components, includeJs for any javascript file you want to include into the DOM and
+        includeJsModule for components located in your node_modules folder.
+    </p>
+    <pre><code class="code-block">
+        ...
+        $this->uni()
+            // load component/myElement/myElement.ce.js and (if exists) component/myElement/myElement.ce.html in a template tag with the id "myElement".
+             ->includeElement('myElement',['userId' => $userId])
+
+            // load external js
+             ->includeJs('//some-awesome-jslibrary.com/file.min.js')
+
+            // load local js
+            // note how the first parameter is the location (required),
+            // the second one an array with substitutions (as always, with curly brackets) (optional),
+            // and the last one a type for th script-tag (optional, defaults to "text/javascript"),
+             ->includeJs(base. 'component/sibling/sibling.ctrl.js', ['context' => 'test'], 'text/javascript')
+
+            // include node-modules (note: the path-parameter is already based on the node_module directory)
+             ->includeJsModule('@coolPackage/index.js')
+        ...
+    </code></pre>
+
+    <h2 class="subtitle has-margin">output</h2>
+    <p class="has-margin">
         Output simply compiles the files & responds (echoes) to the client. The parameter isn't necessary but you can
-        add a string or array of pre-compiling function(s). Typically this is also at the end of a singleton.
+        add an array of pre-compiling function(s). Typically this is also at the end of a singleton.
     </p>
-<pre>
-<code class="code-block">
-->output();
-</code>
-</pre>
+    <pre><code class="code-block">
+        ...
+        ->output();
+    </code></pre>
 </section>

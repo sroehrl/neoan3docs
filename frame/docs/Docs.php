@@ -18,6 +18,7 @@ class Docs extends Serve
             'menu'    => Ops::embraceFromFile('component/menu/menu.view.html', ['base' => base]),
             'base'    => base
         ]);
+        $this->js .= 'hljs.initHighlightingOnLoad();';
         //        $this->main = preg_replace('/\n/','',$this->main);
         parent::output($params);
     }
@@ -39,6 +40,7 @@ class Docs extends Serve
             ],
             'js'         => [
                 ['src' => path . '/frame/docs/main.js', 'data' => ['base' => base]],
+                ['src' => base . '/asset/highlightjs/highlight.pack.js'],
                 ['src' => base . 'neoan3-pwa/register/neoan3-docs']
             ],
             'meta'       => [
@@ -46,6 +48,7 @@ class Docs extends Serve
             ],
             'stylesheet' => [
                 '' . base . 'frame/docs/index.css',
+                '' . base . 'asset/highlightjs/styles/darcula.css',
             ]
         ];
     }
