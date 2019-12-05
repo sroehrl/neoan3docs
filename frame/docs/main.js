@@ -17,8 +17,9 @@ if (activeId !== null) {
 
 let pres = document.querySelectorAll(".code-block");
 if (pres.length) {
-    let startIndent, regEx, content, lines, formatted = '';
+    let startIndent, regEx, content, lines, formatted;
     pres.forEach(pre => {
+        formatted = '';
         content = pre.textContent.replace(/\n+/, "");
         startIndent = content.search(/\S/);
         lines = content.split("\n");
