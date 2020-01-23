@@ -9,6 +9,15 @@ use Neoan3\Core\Serve;
 
 class Docs extends Serve
 {
+    private $forcePWA = false;
+    function __construct()
+    {
+        parent::__construct();
+        if($_SERVER['HTTP_HOST'] !== 'localhost' || $this->forcePWA){
+            $this->includeJs(base . 'neoan3-pwa/register/neoan3-docs');
+            $this->addHead('link', ['rel' => 'manifest', 'href' => base .'neoan3-pwa/manifest/neoan3-docs']);
+        }
+    }
 
     function output($params = [])
     {
@@ -33,15 +42,11 @@ class Docs extends Serve
                     'type'  => 'image/png',
                     'rel'   => 'icon',
                     'href'  => 'asset/neoan-favicon.png'
-                ],
-                [
-                    'rel' => 'manifest', 'href' => base .'neoan3-pwa/manifest/neoan3-docs'
                 ]
             ],
             'js'         => [
                 ['src' => path . '/frame/docs/main.js', 'data' => ['base' => base]],
                 ['src' => base . '/asset/highlightjs/highlight.pack.js'],
-                ['src' => base . 'neoan3-pwa/register/neoan3-docs']
             ],
             'meta'       => [
                 ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']
