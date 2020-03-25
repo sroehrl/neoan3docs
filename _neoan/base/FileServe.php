@@ -1,10 +1,13 @@
 <?php
+
+namespace Neoan3\Core;
+
 require_once(dirname(__FILE__) . '/_includes.php');
 
 $route = new Route();
 $serve = new FileServe($_GET['action']);
 
-use \Neoan3\Apps\Ops;
+use Neoan3\Apps\Template;
 
 class FileServe
 {
@@ -28,7 +31,7 @@ class FileServe
             }
             $keys = array_keys($this->substitutes);
             $this->mimeType(end($keys));
-            echo Ops::embrace(end($this->substitutes), $this->substitutes);
+            echo Template::embrace(end($this->substitutes), $this->substitutes);
             exit();
         }
         echo '';
