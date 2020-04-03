@@ -1,0 +1,219 @@
+<section class="section">
+    <h1 class="title">Folder Structure</h1>
+    <h2 class="subtitle">How neoan3 is structured</h2>
+    <div class="columns">
+        <div class="column is-narrow">
+            <aside class="menu">
+                <p class="menu-label">
+                    /_neoan (core)
+                </p>
+                <p class="menu-label">
+                    /_template (optional)
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#cli-templating">CLI templating</a></li>
+                </ul>
+                <p class="menu-label">
+                    /asset
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#asset-folder">about the asset folder</a></li>
+                </ul>
+                <p class="menu-label">
+                    /component
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#component-folder">component folders</a></li>
+                </ul>
+                <p class="menu-label">
+                    /frame
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#frame-folder">frame folders</a></li>
+                </ul>
+                <p class="menu-label">
+                    /model
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#model-folder">model folders</a></li>
+                </ul>
+                <p class="menu-label">
+                    default.php
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#default">The default.php</a></li>
+                </ul>
+                <p class="menu-label">
+                    .htaccess
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#htaccess">Working with apache</a></li>
+                </ul>
+            </aside>
+        </div>
+        <div class="column">
+            <article>
+                <h2 class="subtitle has-margin" id="cli-templating">CLI templating</h2>
+                <p>
+                    You can influence the cli-generated output with templates. To do so, place a folder _template in your project. Basic
+                    variable support works with double curly braces without spaces ( {{example}} ) The following files are
+                    respected:
+                </p>
+                <table class="table has-margin">
+                    <thead>
+                    <tr>
+                        <th>Template File</th>
+                        <th>Entity</th>
+                        <th>Vairable</th>
+                        <th>Note</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>
+                            api.php
+                        </th>
+                        <td>component (API)</td>
+                        <td>name, frame</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            route.php
+                        </th>
+                        <td>component (Route)</td>
+                        <td>name, frame</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            view.html
+                        </th>
+                        <td>component (Route)</td>
+                        <td>name</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            ce.php
+                        </th>
+                        <td>Custom element</td>
+                        <td>name</td>
+                        <td>*PHP files for custom element is only generated if template is present</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            ce.js
+                        </th>
+                        <td>Custom element</td>
+                        <td>name</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            ce.html
+                        </th>
+                        <td>Custom element</td>
+                        <td>name</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            transformer.php
+                        </th>
+                        <td>Model transformer</td>
+                        <td>name, structure</td>
+                        <td>*Transformer usage requires neoan3-apps/transformer</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="has-margin">
+                    If the the cli-command `neoan3 new [transformer/component] &lt;name>` finds the according template,
+                    it generates files accordingly. Want to learn more about cli-templating?
+                </p>
+                <a href="https://www.npmjs.com/package/neoan3-cli#templates" class="button is-outlined is-primary" target="_blank">
+                    npmjs.com/package/neoan3-cli#templates
+                </a>
+            </article>
+            <article>
+                <h2 class="subtitle has-margin" id="asset-folder">Asset folder</h2>
+                <p>
+                    This folder is intended to hold static files of all sorts and neoan3 holds no opinion on the deeper structure.
+                    <br>Classically, you might want to have aan image and/or upload folder within it.
+                </p>
+            </article>
+            <article>
+                <h2 class="subtitle has-margin" id="component-folder">Component folder</h2>
+                <p>
+                    This folder holds hybrid, route, api and custom components. Components must have their own, lower case directory.
+                    <br>Note that neoan3's routing system performs a kebab-to-camel-case transformation when evaluating routes.
+                    <br>This means that
+                </p>
+                <p class="has-margin">
+                    <code>your-app.com/my-component/</code> targets the component <br>
+                    <code>/component/myComponent</code><br>
+                </p>
+                <p>
+                    <a class="button is-outlined is-primary" href="{{base}}component-types/">learn more about components</a>
+                </p>
+            </article>
+            <article>
+                <h2 class="subtitle has-margin" id="frame-folder">Frame folder</h2>
+                <p class="has-margin">
+                    Frames are a unique and vital piece to a Neoan3.
+                    Frames hold global information & functionality and hook into the framework's <strong>Serve</strong> class.
+                    As such, a frame tends to provide project-specific settings like the HTML skeleton, used CSS, includes, apps etc.
+                    Components can either extend a particular frame (default behavior of API-components), 
+                    construct them via the <a href="{{base}}unicore-singleton/">unicore singleton</a> or use them as instance ( new MyFrameName() ).
+                </p>
+                <p>
+                    <a class="button is-outlined is-primary" href="{{base}}frames/">learn more about frames</a>
+                </p>
+            </article>
+            <article>
+                <h2 class="subtitle has-margin" id="model-folder">Model folder</h2>
+                <p class="has-margin">
+                    Neoan3 follows an MVC-approach that isn't obvious when looking at the folder structure.
+                    Models, however, do have their own directories within the model-folder.
+                    While static use is encouraged due to some third party apps, Neoan3 does not dictate a certain structure.
+                </p>
+                <p>
+                    <a class="button is-outlined is-primary" href="{{base}}models/">learn more about models</a>
+                </p>
+            </article>
+            <article>
+                <h2 class="subtitle has-margin" id="default">default.php</h2>
+                <p class="has-margin">
+                    This file is requested early in the initiation process and facilitates the possibility to hook into early events.
+                    After installation, the default controller (usually a route controller) and 404-controller are already defined.
+                    In most use-cases, you will want to change at least the value of <strong>default_ctrl</strong> to your "homepage" controller.
+                    For example, if your application has a "home" route component with your start page, your default.php could look like this:
+                </p>
+                <pre class="has-margin"><code class="code-block">
+                    &lt;?php
+                    // default route (homepage)
+                    define('default_ctrl','home');
+
+                    // optional: custom 404
+                    define('default_404','notFound');
+
+                    // optional: react on early events
+                    Event::listen('Core\\Route::notFound', function($call){
+                        // redirect?
+                    })
+                 </code></pre>
+
+            </article>
+            <article>
+                <h2 class="subtitle has-margin" id="htaccess">.htaccess & Apache</h2>
+                <p class="has-margin">
+                    When running Neoan3 on Apache, the easiest way to set up intended behavior is using the provided
+                    .htaccess. In most cases, you likely want to change the "RewriteBase" to "/" (assuming your web-root equals the application root).
+                    Neoan3 <strong>requires mod_rewrite</strong> to be available.
+                </p>
+            </article>
+        </div>
+    </div>
+
+
+</section>
