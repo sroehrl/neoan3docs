@@ -27,6 +27,10 @@ class Docs extends Serve
             'menu'    => Ops::embraceFromFile('component/menu/menu.view.html', ['base' => base]),
             'base'    => base
         ]);
+
+        if($_SERVER['HTTP_HOST'] !== 'neoan3.rocks'){
+            $this->header = file_get_contents(__DIR__ . '/warning.html');
+        }
         $this->js .= 'hljs.initHighlightingOnLoad();';
         //        $this->main = preg_replace('/\n/','',$this->main);
         parent::output($params);
