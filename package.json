@@ -21,7 +21,7 @@
     "url": "https://github.com/sroehrl/neoan3/issues"
   },
   "homepage": "https://github.com/sroehrl/neoan3#readme",
-  "dependencies": {
+  "devDependencies": {
     "bulma": "^0.7.5"
   }
 }
