@@ -28,22 +28,21 @@
     </p>
     <pre>
         <code class="code-block">
-    namespace Neoan3\Frame;
+            namespace Neoan3\Frame;
+
             use Neoan3\Apps\Ops;
             use Neoan3\Core\Serve;
 
 
             class Test extends Serve
             {
-
+                // you can overwrite public methods of \Core\Serve
                 function output($params = [])
                 {
+                    // auto-generate title-tags depending on current route
                     $this->addHead('title',preg_replace('/[A-Z]/',' $0',ucfirst(current_endpoint)));
-                    $this->main = Ops::embraceFromFile('frame/test/skeleton.html',[
-                        'content'=>$this->main,
-                        'menu' => Ops::embraceFromFile('component/menu/menu.view.html',['base'=>base]),
-                        'base' => base
-                    ]);
+
+                    // In most scenarios, you probably want to execute the core's render function
                     parent::output($params);
                 }
 
@@ -75,9 +74,41 @@
     </pre>
     <p>
         As you see from the above we have set up the component so that way it will not only have the title reflect in
-        head tag the name of the component. In addition, we've set up the view for the menu so it appears on every web
-        page. In addition, we've set up a constants function. These constants set up base as a value, the favicon for
-        site, the JavaScript, meta tag and the stylesheet. Now every component can have their own style and JavaScript
-        files, however when making global changes the Frame is where to go.
+        head tag the name of the component.
+        In addition, we've set up a constants function that allows us to set global configuration as an array.
     </p>
+    <h3 class="subtitle has-margin">Global configuration</h3>
+    <p>
+        Instead of using single Core\Serve method calls to set variables,
+        one can define configuration variables on the frame-level using an associative array of arrays.
+        These arrays are always representations of Core\Serve methods (e.g. 'meta' => Serve->addToHead() ):
+    </p>
+    <ul>
+        <li><a href="#c-js">js</a></li>
+        <li><a href="#c-stylesheet">stylesheet</a></li>
+        <li><a href="#c-meta">meta & link</a></li>
+    </ul>
+    <h4 class="subtitle has-margin" id="c-js">js-section</h4>
+    <p>
+        Each array should have "src" and can have "data" and "type". Using "data" will provide possibility to use the template engine
+        to substitute key-value pairs. The result will be rendered into the DOM. Omitting this attribute will lead to an inclusion of the file.
+    </p>
+
+    <h4 class="subtitle has-margin" id="c-stylesheet">stylesheet-section</h4>
+    <p>
+        Accepts an array of stylesheet locations to be included in every execution of a route-component.
+    </p>
+    <h4 class="subtitle has-margin" id="c-meta">meta-section & link section</h4>
+    <p>
+        Generates meta- or link-tags using the provided key-value combination(s) as attributes.
+
+    </p>
+    <div class="columns">
+        <div class="column">
+            <p><code>['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']</code></p>
+        </div>
+        <div class="column is-narrow">=></div>
+        <div class="column"><p><code>&ltmeta name="viewport" content="width=device-width, initial-scale=1"></code></p></div>
+    </div>
+
 </section>
