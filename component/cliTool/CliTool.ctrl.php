@@ -4,12 +4,26 @@
 namespace Neoan3\Components;
 
 use Neoan3\Core\Unicore;
+use Neoan3\Frame\Docs;
 
-class CliTool extends Unicore
+class CliTool extends Docs
 {
     function init()
     {
-        $this->uni('docs')->hook('main','cliTool')->output();
+        $this->hook('main','cliTool');
+
+//        ...
+        $this->output();
+        $this->uni('docs')
+            ->hook('header','')
+            ->hook('main','cliTool')
+            ->callback($this,'function2')
+            ->output();
+//        $this->uni()->hook('main','cliTool')->output();
+    }
+    function function2(Docs $context)
+    {
+
     }
 
 }
