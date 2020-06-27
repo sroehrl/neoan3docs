@@ -1,19 +1,38 @@
+
 <section class="section">
-    <h1 class="title">neoan3 </h1>
-    <h2 class="subtitle">The real life PHP framework</h2>
-    <div class="columns">
-        <div class="column">
-            <p>
-                Be up & running in less than 3 minutes. <br>
-                Fastest "Hello world" example directly in your terminal:
-            </p>
-            <pre class="has-margin"><code class="code-block">
-                npm i -g neoan3-cli
+    <section class="hero is-primary" style="margin-bottom: 40px" >
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                    <figure class="image is-128x128" style="left: calc(50% - 64px)">
+                        <img src="{{base}}asset/neoan3.webp">
+                    </figure>
+                <h1 class="title">
+                    neoan3
+                </h1>
+                <h2 class="subtitle">
+                    The real life PHP framework
+                </h2>
+                <p>Fast, clean, easy, reliable</p>
+
+            </div>
+        </div>
+    </section>
+    <p>
+        Be up & running in less than 3 minutes. <br>
+        Fastest "Hello world" example directly in your terminal:
+    </p>
+    <pre class="has-margin"><code class="code-block plaintext">
+                composer global require neoan3/neoan3
+
                 mkdir demo
                 cd demo
-                neoan3 new app demo
+                neoan3 new app
                 neoan3 develop
             </code></pre>
+
+    <div class="columns">
+        <div class="column">
+
             <p>
                 You can now start playing around with the view. The demo-output can be found in <code>/component/demo/demo.view.html</code>
             </p>
@@ -26,23 +45,23 @@
 
         </div>
         <div class="column">
-            <div class="notification is-success">
-                <h3 class="subtitle">How amazing is it?</h3>
-                <p class="has-margin">
-                    <strong>
-                        <a target="_blank" href="https://developers.google.com/speed/pagespeed/insights/?hl=en&url=https%3A%2F%2Fneoan3.rocks%2Fgetting-started%2F">Google</a>
-                        <a target="_blank" href="{{base}}asset/GTmetrix-report-neoan.us.pdf">GTmetrix</a>
-                    </strong>
-                </p>
-
+            <div class="notification ">
+                <h3 class="subtitle ">How amazing is it?</h3>
+                <div class="field has-addons has-margin ">
+                    <p class="control">
+                        <a class="button is-info is-outlined" target="_blank" href="https://developers.google.com/speed/pagespeed/insights/?hl=en&url=https%3A%2F%2Fneoan3.rocks%2Fgetting-started%2F">Google</a>
+                    </p>
+                    <p class="control">
+                        <a class="button is-info is-outlined" target="_blank" href="{{base}}asset/GTmetrix-report-neoan.us.pdf">GTmetrix</a>
+                    </p>
+                </div>
                 <h3 class="subtitle">What is an all propose framework? And why do we use it?</h3>
                 Re-usability, maintainability, modularity and abstraction are only a couple of the terms heard when we
                 talk about frameworks.
                 But where is the line between strict formats for rapid development and flexibility to bring freedom?<br>
                 Once learned, neoan3 delivers the possibility to develop <strong>very efficient and fast</strong>
                 without losing flexibility.
-                Relevant core functionality is intentionally structured so it can easily be "hacked" to one's needs,
-                without endangering updatability. <br><br>
+
 
             </div>
         </div>
