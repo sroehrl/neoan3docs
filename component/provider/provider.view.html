@@ -1,0 +1,226 @@
+<section class="section">
+    <h1 class="title">Provider</h1>
+    <h2 class="subtitle">Abstraction & Decoupling</h2>
+    <p>
+        In order to inject dependencies like a database wrapper instead of coupling models with a particular orm or database type,
+        you can use providers and respective interfaces while programming.
+    </p>
+    <p class="has-margin">In a frame</p>
+    <pre><code class="code-block">
+        &lt;?php
+
+
+        namespace Neoan3\Frame;
+
+        use Neoan3\Core\Serve;
+        use Neoan3\Provider\MySql\Database;
+        use Neoan3\Provider\MySql\DatabaseWrapper;
+
+
+        /**
+         * Class Demo
+         * @package Neoan3\Frame
+         */
+        class Demo extends Serve
+        {
+            /**
+             * @var Database|DatabaseWrapper
+             * Setting this variable to "protected" will force database interactions within models
+             * (enforcing clean code can make sense)
+             */
+            public Database $db;
+
+            /**
+             * Demo constructor.
+             * Optionally receives a provider
+             * @param Database|null $db
+             */
+            function __construct(Database $db = null)
+            {
+                parent::__construct();
+                if($db){
+                    $this->db = $db;
+                } else {
+                    $this->db = new DatabaseWrapper(getCredentials()['my_db']);
+                }
+            }
+            /**
+             * IMPORTANT: in order to automatically decouple the models as well,
+             * you need a method handling model loading to avoid having to call the init-method each time
+             * @param $model
+             * @return mixed
+             */
+            function model($model)
+            {
+                $model::init($this->db);
+                return $model;
+            }
+
+        }
+    </code></pre>
+    <p class="has-margin">In a controller written singleton-style</p>
+    <pre><code class="code-block">
+        &lt;?php
+
+
+        namespace Neoan3\Components;
+
+        use Neoan3\Core\Unicore;
+        use Neoan3\Provider\MySql\Database;
+        use Neoan3\Model\postModel;
+
+        class Demo extends Unicore
+        {
+            /**
+             * @var Database|null
+             */
+            private ?DataBase $db;
+
+            /**
+             * @var posts
+             */
+            private array $posts;
+
+            /**
+             * Demo constructor.
+             * This constructor is only necessary if providers a decoupled
+             * @param Database|null $db
+             */
+            public function __construct(DataBase $db = null)
+            {
+                $this->db = $db;
+            }
+
+            /**
+             * Route call (Singleton style)
+             */
+            function init()
+            {
+                $this
+                    ->registerProvider($this->db)
+                    ->callback($this, 'bind')
+                    ->uni('demo')
+                    ->hook('main', 'demo', ['posts' => $this->posts])
+                    ->output();
+            }
+            /**
+             * Route call (Singleton style)
+             */
+            function bind($uni)
+            {
+                // example without the use of a model layer:
+                // $uni->db->easy('post.*', ['^delete_date'])
+
+                // using a model
+                $this->posts = $uni->model(postModel::class)::find(['^delete_date']);
+                return $uni;
+            }
+        }
+    </code></pre>
+    <p class="has-margin">In a controller extending a frame</p>
+    <pre><code class="code-block">
+        &lt;?php
+
+
+        namespace Neoan3\Components;
+
+        use Neoan3\Provider\MySql\Database;
+        use Neoan3\Model\postModel;
+        use Neoan3\Frame\Demo as DemoFrame;
+
+        class Demo extends DemoFrame
+        {
+
+            /**
+             * @var posts
+             */
+            private array $posts;
+
+            /**
+             * Demo constructor.
+             * This constructor is only necessary if providers a decoupled
+             * @param Database|null $db
+             */
+            function __construct(Database $db = null)
+            {
+                parent::__construct($db);
+            }
+
+            /**
+             * Route call
+             */
+            function init()
+            {
+                $this
+                    ->hook('main', 'demo', [
+                        'posts' => $this->model(postModel::class)::find(['^delete_date']);
+                    ])
+                    ->output();
+            }
+
+        }
+    </code></pre>
+    <p class="has-margin">In a model</p>
+    <pre><code class="code-block">
+        &lt;?php
+
+        namespace Neoan3\Model;
+
+
+        use Neoan3\Provider\MySql\Database;
+        use Neoan3\Provider\MySql\Transform;
+
+        /**
+         * Class post
+         * @method static get(string|null $id)
+         * @method static create(array $modelArray)
+         * @method static update(array $modelArray)
+         * @method static find(array|null $conditionArray)
+         * @package Neoan3\Model
+         */
+        class PostModel extends IndexModel
+        {
+            /**
+             * @var Database|null
+             */
+            private static ?Database $db = null;
+
+            /**
+             * @param Database $database
+             */
+            static function init(Database $database)
+            {
+                self::$db = $database;
+            }
+
+            /**
+             * @param $method
+             * @param $args
+             * @return mixed
+             */
+            public static function __callStatic($method, $args)
+            {
+                if(!method_exists(self::class, $method)){
+                    $transform = new Transform('post', self::$db);
+                    return $transform->$method(...$args);
+                } else {
+                    return self::$method(...$args);
+                }
+            }
+
+
+        }
+    </code></pre>
+    <h2 class="subtitle has-margin">Testing</h2>
+    <p class="has-margin">Now we can test database transactions and easily mock the outcome of queries. The cli-tool generates tests accordingly, so we will only focus on the injection logic</p>
+    <pre><code class="code-block">
+        ...
+        // testing a model
+        $mockDb = new Neoan3\Provider\MySql\MockDatabaseWrapper();
+        $model = $mockDb->mockModel('post');
+        $mockDb->registerResult([$model]);
+        PostModel::init($mockDb);
+        $toTest = PostModel::get('123142345');
+
+    </code></pre>
+</section>

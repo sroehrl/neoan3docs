@@ -47,10 +47,15 @@ $menu-item-active-background-color: $primary
 .main-content-container
   min-height: 100vh
   overflow: auto
+
+@media only screen and (min-width: 770px)
+  .main-content-container
+    max-width: 80%
 @import "../../node_modules/bulma/bulma.sass"
 
 pre code
   color: $primary
+  overflow: scroll
 
 
 // spacing

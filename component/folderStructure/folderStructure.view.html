@@ -38,6 +38,18 @@
                     <li><a href="{{base}}folder-structure/#model-folder">model folders</a></li>
                 </ul>
                 <p class="menu-label">
+                    /provider
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#provider-folder">provider folders</a></li>
+                </ul>
+                <p class="menu-label">
+                    /tests
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{{base}}folder-structure/#tests-folder">tests folders</a></li>
+                </ul>
+                <p class="menu-label">
                     default.php
                 </p>
                 <ul class="menu-list">
@@ -179,6 +191,17 @@
                 </p>
                 <p>
                     <a class="button is-outlined is-primary" href="{{base}}models/">learn more about models</a>
+                </p>
+            </article>
+            <article>
+                <h2 class="subtitle has-margin" id="provider-folder">Provider folder</h2>
+                <p class="has-margin">
+                    In order to decouple components and models from the executing instance - and in order to use external testing/mocking -
+                    you can program against interfaces that provide required instances as dependency injection.
+                    The current version ships with a MySql provider for database transactions.
+                </p>
+                <p>
+                    <a class="button is-outlined is-primary" href="{{base}}provider/">learn more about providers</a>
                 </p>
             </article>
             <article>
