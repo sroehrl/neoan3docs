@@ -1,0 +1,91 @@
+<section class="section">
+    <h1 class="title">Templating</h1>
+    <h2 class="subtitle">Dynamic Templates for your content</h2>
+    <p>
+        Let's first clarify potential confusion: There are two types of templates. The ones used for generation with the cli-tool, and the view templates.
+        Here we want to focus on creating dynamic view templates.
+    </p>
+    <a class="button is-outlined is-primary has-margin" href="https://packagist.org/packages/neoan3-apps/template">learn more about neoan3-apps/template</a>
+    <article class="message has-margin">
+        <div class="message-header">
+            <p>Note: Alternative template engines</p>
+        </div>
+        <div class="message-body has-text-white">
+            What you will find here is based on the assumption you are using the default neoan3-apps/template package (installs with neoan3).
+            You can easily hook up any template engine as well. In order for the file recognition to work, be sure to adapt the file-ending accordingly.
+            <br><br>
+            e.g. <code>$this->viewExt = 'pug'</code> in your frame's __construct method.
+        </div>
+    </article>
+    <h2 class="subtitle has-margin">Passing variables to the template</h2>
+    <p class="has-margin">component/myComponent/MyComponent.ctrl.php</p>
+    <pre><code class="code-block">
+        &lt;?php
+        /* component MyComponent (component/myComponent/MyComponent.ctrl.php)  */
+
+        namespace Neoan3\Components;
+
+        use Neoan3\Core\Unicore;
+
+        class MyComponent extends Unicore{
+
+            private array $vars;
+
+            function init()
+            {
+
+                $this->uni('myFrame')
+                    ->callback($this, 'getVars')
+                    // the hook-method accepts 2-3 arguments
+                    // the first argument describes the targeted part of the page
+                    // (possible values are 'header', 'main' & 'footer')
+                    // the second argument provides the wanted template
+                    // (here the file /component/myComponent/myComponent.view.html)
+                    // the third argument accepts variables as array
+                    // (usually the data will directly come from a model / database)
+                    ->hook('main', 'myComponent', $vars)
+                    ->output();
+            }
+
+            function getVars($uni)
+            {
+                // variables we want to pass in
+                $this-vars = [
+                    'headline' => 'My variable'
+                    'content' => 'This is some fine text'
+                ];
+            }
+
+        }
+    </code></pre>
+    <p class="has-margin">component/myComponent/myComponent.view.html</p>
+    <pre><code class="code-block">
+        &lth1>{{headline}}&lt/h1>
+        &ltp>{{content}}&lt/p>
+    </code></pre>
+    <p class="has-margin">Result:</p>
+    <pre><code class="code-block">
+        &lth1>My variable&lt/h1>
+        &ltp>This is some fine text&lt/p>
+    </code></pre>
+    <h2 class="subtitle has-margin">A step further</h2>
+    <p>
+        While the full documentation for templating can be found at <a href="https://github.com/sroehrl/neoan3-template#neoan3-appstemplate">GitHub</a>,
+        let's look into an examples of advanced usage:
+    </p>
+    <pre class="has-margin"><code class="code-block">
+        &lt!--   assuming pass-in is ['numbers' => ['name' => 'one', 'name' => 'two'] ]     -->
+        &lth1>Numbers:&lt/h1>
+        &ltul>
+            &ltli n-for="numbers as number" n-if="number.name != 'one'">{{number.name}}&lt/li>
+        &lt/ul>
+    </code></pre>
+    <p class="has-margin">Result:</p>
+    <pre><code class="code-block">
+        &lt!--   assuming pass-in is ['numbers' => ['name' => 'one', 'name' => 'two'] ]     -->
+        &lth1>Numbers:&lt/h1>
+        &ltul>
+            &ltli>two&lt/li>
+        &lt/ul>
+    </code></pre>
+</section>
