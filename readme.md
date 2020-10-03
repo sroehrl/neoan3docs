@@ -6,7 +6,7 @@ Writing documentation is a good way to get your feet wet in the open source worl
 
 These docs are intended to provide documentation for neoan3
 
-Currently online @ [http://neoan.us/neoan3docs/](http://neoan.us/neoan3docs/)
+Currently online @ [http://neoan3.rocks](http://neoan3.rocks)
 
 Uses neoan3 & css-only frontend framework [bulma](https://bulma.io)
 
