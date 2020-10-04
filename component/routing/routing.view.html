@@ -1,0 +1,127 @@
+<section class="section">
+    <h1 class="title">Routing</h1>
+    <h2 class="subtitle">Automatic routing</h2>
+    <p>
+        Unlike other solutions, neoan3 routes automatically based on the url.
+        Getting familiar with how routing works and understanding that components can be hybrid (e.g. a custom component as well as a route-component at the same time)
+        is crucial in order to understand intended outcome. To jump right into the "out of the box" behavior, feel free to directly go to the links below.
+        To understand how to influence routing, read on.
+    </p>
+    <div class="panel has-margin">
+        <p class="panel-heading">Routing mechanism</p>
+        <div class="panel-block">
+            <a href="{{base}}routing-api">Api</a>
+        </div>
+        <div class="panel-block">
+            <a href="{{base}}routing-web">Web</a>
+        </div>
+        <div class="panel-block">
+            <a href="{{base}}routing-node-module">Node & custom components</a>
+        </div>
+    </div>
+    <h2 class="subtitle">.htaccess vs _neoan/server.php</h2>
+    <p>
+        Neoan3 can be executed in two "modes". The classical deployment on an apache serve utilizes a .htaccess file in order to break down requests into redirects.
+        When developing (<code>neoan3 develop</code>)  or on common NGINX or proxy implementations, requests are directly relayed to the file _neoan/server.php.
+    </p>
+    <article class="message has-margin is-danger">
+        <div class="message-header">
+            <p>Deployment checklist</p>
+        </div>
+        <div class="message-body">
+            Make sure to remember potential differences in how you serve neoan3 when you deploy and made changes to routing mechanisms!
+        </div>
+    </article>
+    <p>
+        Relevant .htaccess lines
+    </p>
+    <pre><code class="code-block">
+        # Relevant if your application is run in a sub-directory of the web-root
+        # (e.g. /my-project/ for http://localhost/my-project/)
+        RewriteBase /
+        # turn off www
+        # active by default, one can force redirecting www.yoursite.com to yoursite.com (recommended)
+        RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+        RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+        # force ssl
+        # commented out by default, one can force https over http
+        #RewriteCond %{HTTPS} off
+        #RewriteCond %{REQUEST_URI} !/img/
+        #RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+        # Apache-fix: get Authorization header
+        RewriteEngine On
+        RewriteRule .* - [e=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+        ...
+
+        # ROUTING for web (route-components): redirect requests to index.php
+        RewriteRule ^(.*)?/$     index.php?action=$1&%{QUERY_STRING}    [L]
+
+        ...
+
+        # ROUTING for node_modules
+        # remove for native use or set to [R=301]
+        RewriteRule ^node_modules/(.*)$    _neoan/base/Node.php?action=$1&%{QUERY_STRING}    [L,NC]
+
+        ...
+        # ROUTING for api
+        # {root}/api.v1/
+        RewriteRule ^api.(.*)$    _neoan/api/index.php    [L,NC]
+
+        # ROUTING fro files
+        # {root}/serve.file/
+        RewriteRule ^serve.file/(.*)$    _neoan/base/FileServe.php?action=$1&%{QUERY_STRING}    [L,NC]
+    </code></pre>
+    <h2 class="subtitle has-margin">About node & file routing</h2>
+    <p>
+        As visible in the file above, neoan3 reroutes node_module requests. With the help of the file requests are redirected to,
+        neoan3 can import node_modules otherwise requiring a build-process. Yes, you read that right:
+        with hybrid components, your js-modules can import node_modules as well as their dependencies on the fly and even dynamically at run-time.
+        You will learn more about this at <a href="{{base}}custom-component/">custom component</a>.
+    </p>
+    <h2 class="subtitle has-margin">Alternative API processing</h2>
+    <p>
+        The file _neoan/api/index.php retrieves a version from the url and redirects to the used api class accordingly
+        ( neoan3's default REST-api lives at _neoan/api/V1.php and is therefore available under webroot.com/api.v1 )
+        You can change this redirect to either achieve a different api-url (e.g. api.webroot.com) or redirect to a different api processor.
+        However, you can also simply create your own API receiver (e.g. V2) and use the existing routing.
+    </p>
+    <h2 class="subtitle has-margin">Alternative web processing</h2>
+    <p>
+        It is not recommended to change the behavior of the web-routing. If you are looking to hook early stage middleware into the application,
+        entertain manipulating the default.php file. You can also use event-hooks to achieve such tasks. <br><br>
+        Example default.php:
+    </p>
+    <pre><code class="code-block">
+        &lt?php
+        // default route (homepage)
+        define('default_ctrl','demo');
+
+        // optional: custom 404
+        define('default_404','notFound');
+
+        /*
+        *   Example: assuming we want to allow cross origin requests but
+        *   only for incoming api calls and only from certain origins
+        */
+        \Neoan3\Core\Event::listen('Core\Api::incoming', function(){
+            if(isset($_SERVER['HTTP_ORIGIN'])){
+                $http_origin = $_SERVER['HTTP_ORIGIN'];
+                $allowed = [
+                    "https://123.my-vendor.com",
+                    "https://another-project.com",
+                ];
+
+                if (in_array($http_origin, $allowed))
+                {
+                    header("Access-Control-Allow-Origin: $http_origin");
+                }
+            }
+        });
+    </code></pre>
+    <p>
+        <a class="button is-outlined is-primary has-margin" href="{{base}}events">learn more about events</a>
+    </p>
+</section>
