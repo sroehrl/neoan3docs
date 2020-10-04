@@ -29,12 +29,12 @@ class Tutorial extends Unicore{
     {
         $content = sub(1) ? sub(1) : null;
         $contents = [
-            'api' => ['video'=> 'rLC_enc2MAE', 'name' => 'Stateless API']
+            'api' => ['video'=> 'rLC_enc2MAE', 'name' => 'Stateless API', 'github' => false]
         ];
         if(isset($contents[$content])){
             $this->values = $contents[$content];
         } else {
-            $this->values = ['video' => 'f_GckMCS2XY', 'name' => 'General'];
+            $this->values = ['video' => 'f_GckMCS2XY', 'name' => 'General', 'github' => false];
         }
     }
 }

@@ -1,0 +1,80 @@
+<section class="section">
+    <h1 class="title">Testing</h1>
+    <h2 class="subtitle">Adhering to best practices</h2>
+    <p>
+        The first step in order to ensure the best outcome of testing is making sure xdebug is installed and activated.
+        Neoan3 installs with PHPunit and has a phpunit.xml set up accordingly.
+    </p>
+    <h2 class="subtitle has-margin">Creating tests</h2>
+    <p>
+        Test-classes are expected to be within the respective component or model. You can use the cli-tool to create these files.
+    </p>
+    <p><code>neoan3 new test &lt;component|model> &lt;name></code></p>
+    <p>
+        The tool is smart enough to guess the differences between types of components (e.g. api or route) and suggests test-methods accordingly.
+        In some cases the tests can be completely generated for you.
+    </p>
+    <p class="has-margin">
+        What this means is best understood by simply trying it out: generate a new route component with: <br>
+        <code>neoan3 new component example -t:route -v:yes -f:demo</code> and create a test for the component with <br>
+        <code>neoan3 new test component example</code> <br><br>
+        You should have the following in file /component/example/ExampleTest.php
+    </p>
+    <pre>
+        <code class="code-block">
+            &lt?php
+
+            namespace Neoan3\Components;
+
+            use PHPUnit\Framework\TestCase;
+
+            class ExampleTest extends TestCase
+            {
+                private Example $instance;
+                function setUp(): void
+                {
+                    $this->instance = new Example();
+                }
+
+                public function testInit()
+                {
+                    $this->expectOutputRegex('/^&lt!doctype html>/');
+                    $this->instance->init();
+                }
+
+            }
+        </code>
+    </pre>
+    <p class="has-margin">
+        In this simple example the tool identifies that the component is a route component and tests that the output starts with the
+        doctype declaration, ensuring that there are no errors thrown or headers printed.
+    </p>
+    <h2 class="subtitle has-margin">Running tests</h2>
+    <p>
+        The easiest way is to run <code>neoan3 test</code>, which will execute all tests and (if xdebug is available), create a coverage report in
+        /tests.
+    </p>
+    <h2 class="subtitle has-margin">Mocking</h2>
+    <p>
+        Since the introduction of providers, mocking has become easier and a MockDatabaseWrapper is available at your disposal.
+        This class implements the Database interface and can therefore be used to write tests without actually executing database transactions.
+        In order to explore its capabilities, simply create a test for an existing model and inspect how the database is tested.
+        Please be advised that your frame has to support dependency injection of a database provider in order to mock components that use models.
+    </p>
+    <h2 class="title has-margin">Continuous Integration</h2>
+    <p>
+        Neoan3 ships with a .travis.yml which resolves build-testing with php 7.4 and reporting to code-climate for quality, velocity and test-coverage evaluation.
+    </p>
+    <h2 class="subtitle has-margin">Using Travis CI & Code Climate</h2>
+    <p>
+        The recommended workflow for setting up these tools is to
+    </p>
+    <ul class="has-margin">
+        <li>1. Share your project on GitHub</li>
+        <li>2. Add your repository to codeclimate</li>
+        <li>3. Retrieve your Test Reporter ID for the repository from codeclimate</li>
+        <li>4. Add your repository to Travis-CI</li>
+        <li>5. Add your Test Reporter ID as an environment variable to your repo on Travis-CI (CC_TEST_REPORTER_ID)</li>
+    </ul>
+    <p>Once these steps are completed, every pull request on your repository on GitHub should trigger a build-process. (Don't forget your badges ;-) )</p>
+</section>

@@ -2,22 +2,35 @@
     <h1 class="title">Apps</h1>
     <h2 class="subtitle">Expanding functionality of Neoan3</h2>
     <p class="has-margin">
-        Neaon3 is a very light framework that has a lot of functionality out-of-the-box, however, there is a plethora of
-        apps that are available to add as needed. Neoan3 apps not only extend the functionality of the Neoan3 framework but
-        they can be used outside of the framework as well as an add-in.
+        Many functionalities of Neoan3 make use of third party or external tools. When part of the framework,
+        they use the namespace Neoan3\Apps.
+        However, the way autoloading works enables you to use nearly any composer package and use it within the framework.
+        Apps are stand-alone solutions that do not require neoan3 nor does neoan3 require them. However, creating a new project will ship with the following packages:
     </p>
 
-    <h2 class="subtitle">Sources of Apps</h2>
-    <p>There are three primary sources for Neoan3 Apps:</p>
+
+
+    <h2 class="subtitle">Bundled apps</h2>
     <p>
-        <a href="https://www.npmjs.com/package/neoan3-cli"><strong>1. NPM</strong></a>
+        <a target="_blank" href="https://github.com/sroehrl/neoan3-template"><strong>neoan3-template (default template engine)</strong></a>
     </p>
     <p>
-        <a href="https://packagist.org/packages/neoan3-apps/"><strong>2. Composer (via Packagist)</strong></a>
+        <a target="_blank" href="https://github.com/sroehrl/neoan3-db"><strong>neoan3-db (default mysql wrapper)</strong></a>
     </p>
     <p>
-        <a href="https://github.com/sroehrl/"><strong>3. Github</strong></a>
+        <a target="_blank" href="https://github.com/sroehrl/neoan3-ops"><strong>neoan3-ops (default string & encryption handler)</strong></a>
     </p>
+
+    <h2 class="subtitle has-margin">Recommended apps</h2>
+    <p>
+        <a target="_blank" href="https://github.com/sroehrl/neoan3-stateless"><strong>neoan3-stateless (JWT-implementation)</strong></a>
+    </p>
+    <p>
+        <a target="_blank" href="https://github.com/sroehrl/neoan3-session"><strong>neoan3-session (session handler)</strong></a>
+    </p>
+    <a target="_blank" class="button is-link is-outlined has-margin" href="https://github.com/search?q=neoan3-">
+        Find apps on GitHub
+    </a>
 
     <div class="has-margin">
         <h2 class="subtitle">Practical Application</h2>
