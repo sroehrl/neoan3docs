@@ -1,0 +1,41 @@
+<section class="section">
+    <h1 class="title">Events</h1>
+    <h2 class="subtitle">What's happening?</h2>
+    <p>
+        Events are a powerful tool to escape and interact between various pieces of functionality. In general, there are only a few methods:
+    </p>
+    <ul class="has-margin">
+        <li class="has-text-success">\Neoan3\Core\Event::listen($eventname, $callbackFunction )</li>
+        <li class="has-text-success">\Neoan3\Core\Event::listenAll($callbackFunction )</li>
+        <li class="has-text-success">\Neoan3\Core\Event::dispatch($eventname, $callbackFunction )</li>
+        <li class="has-text-success">\Neoan3\Core\Event::getFiredEvents()</li>
+        <li class="has-text-success">\Neoan3\Core\Event::getRegisteredListeners()</li>
+    </ul>
+    <pre class="has-margin"><code class="code-block">
+        // example in default.php:
+        \Neoan3\Core\Event::listen('Core::beforeInit', fn($event) =>  var_dump($event))
+    </code></pre>
+    <p class="has-margin">
+        You can dispatch custom events as needed using Event::dispatch. Here we want to give you a quick look at existing core-events:
+    </p>
+    <h2 class="subtitle">Core::beforeInit</h2>
+    <p class="has-margin">
+        Earliest event fired. This event happens AFTER resources are loaded and BEFORE any methods, instances or functions are called.
+    </p>
+    <h2 class="subtitle">Core\Route::notFound</h2>
+    <p class="has-margin">
+        This event happens AFTER a route has been searched for and BEFORE a 404 redirect and header gets served.
+    </p>
+    <h2 class="subtitle">Core\Api::incoming</h2>
+    <p class="has-margin">
+        This event happens AFTER the API handler has been initialized and BEFORE processing of the request begins.
+    </p>
+    <h2 class="subtitle">Core\Api::beforeAnswer</h2>
+    <p class="has-margin">
+        This event happens AFTER the API has completed the request and BEFORE the response is sent to the client.
+    </p>
+    <h2 class="subtitle">Core\Api::error</h2>
+    <p class="has-margin">
+        This event happens on multiple occasions AFTER an issue was encountered and BEFORE a response is sent to the client.
+    </p>
+</section>
