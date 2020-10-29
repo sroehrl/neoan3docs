@@ -12,53 +12,41 @@
         </div>
         <div class="message-body has-text-white">
             What you will find here is based on the assumption you are using the default neoan3-apps/template package (installs with neoan3).
-            You can easily hook up any template engine as well. In order for the file recognition to work, be sure to adapt the file-ending accordingly.
-            <br><br>
-            e.g. <code>$this->viewExt = 'pug'</code> in your frame's __construct method.
+            You can easily hook up any template engine as well. As a matter of fact, you can inject your complete own render logic.
         </div>
     </article>
     <h2 class="subtitle has-margin">Passing variables to the template</h2>
-    <p class="has-margin">component/myComponent/MyComponent.ctrl.php</p>
+    <p class="has-margin">component/MyComponent/MyComponent.ctrl.php</p>
     <pre><code class="code-block">
         &lt;?php
-        /* component MyComponent (component/myComponent/MyComponent.ctrl.php)  */
+
 
         namespace Neoan3\Components;
 
         use Neoan3\Core\Unicore;
 
-        class MyComponent extends Unicore{
+        class MyComponentController extends Unicore{
 
-            private array $vars;
 
             function init()
             {
 
                 $this->uni('myFrame')
-                    ->callback($this, 'getVars')
+                    ->addRenderParameter('headline', fn() => 'My variable')
+                    ->addRenderParameter('content', fn() => 'This is some fine text')
                     // the hook-method accepts 2-3 arguments
                     // the first argument describes the targeted part of the page
                     // (possible values are 'header', 'main' & 'footer')
                     // the second argument provides the wanted template
-                    // (here the file /component/myComponent/myComponent.view.html)
+                    // (here the file /component/MyComponent/myComponent.view.html)
                     // the third argument accepts variables as array
                     // (usually the data will directly come from a model / database)
-                    ->hook('main', 'myComponent', $vars)
+                    ->hook('main', 'myComponent')
                     ->output();
             }
-
-            function getVars($uni)
-            {
-                // variables we want to pass in
-                $this-vars = [
-                    'headline' => 'My variable'
-                    'content' => 'This is some fine text'
-                ];
-            }
-
         }
     </code></pre>
-    <p class="has-margin">component/myComponent/myComponent.view.html</p>
+    <p class="has-margin">component/MyComponent/myComponent.view.html</p>
     <pre><code class="code-block">
         &lth1>{{headline}}&lt/h1>
         &ltp>{{content}}&lt/p>
