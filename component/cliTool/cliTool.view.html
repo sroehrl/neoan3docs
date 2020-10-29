@@ -41,8 +41,8 @@
     </code></pre>
     <p class="has-margin">2. Run neoan3-cli:</p>
     <code>neoan3 new component test</code>
-    <p>Select "Custom Element" when prompted</p>
-    <p class="has-margin">File component/test/test.ce.js:</p>
+    <p><br>Select "Custom Element" when prompted</p>
+    <p class="has-margin">File component/Test/test.ce.js:</p>
     <pre class="has-margin"><code class="code-block">
         class Test extends React.Component {
             render() {
@@ -56,12 +56,14 @@
         The cli-tool makes assumptions based on the model-names. <strong>The existence of a "TestModel", for instance,
                                                                          would connect the model to tables "test" as well as "test_entry", should they exist. </strong>
         <br>
-        Assuming
     </p>
     <h3 class="is-size-5 has-margin">Example: write TestModel migrate.json</h3>
     <p class="has-margin">1. Create model (if not already existing)</p>
     <code>neoan3 new model test</code>
-    <p class="has-margin">2. Create tables (if not already existing)</p>
+    <p class="has-margin">
+        2.1 If table(s) <strong>already exist</strong> (e.g structured like shown below)
+    </p>
+
     <pre class="has-margin"><code class="code-block">
         CREATE TABLE `test` (
           `id` binary(16) NOT NULL PRIMARY KEY,
@@ -77,22 +79,17 @@
           `delete_date` datetime DEFAULT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     </code></pre>
-    <p class="has-margin">3. Write migration</p>
-    <code>neoan3 migrate models down</code>
-    <h3 class="is-size-5 has-margin">Example: update database according to migrate.json changes</h3>
-    <p class="has-margin">When collaborating, using multiple databases, and/or using various branches, you can update your database in one simple step:</p>
-    <code>neoan3 migrate models up</code>
-    <!--<h2 class="subtitle has-margin">Adding components/frames/models</h2>
-    <p>Collaboration is a <strong>huge topic</strong> in today's world.
-       Beginners might initially not see it, but between agile development, containerized solutions and GIT-branching strategies is a world full of unsolved pain points.
-        <br>The recommended approach of neoan3 collaboration can be described as <strong>"Everything but the core is a plugin"</strong>.
-       This means that all components/frames & models can be published (respecting their requirements & dependencies) as installable solutions either within a particular project or in other neoan3 projects.
-        <br>What that means in particular can be explored in <a href="{{base}}collaboration/">Working with teams</a>.
-       For simplicity, here we simply assume that you want to include an existing component, frame, or model.
+    Run <code>neoan3 migrate models down</code>
+    <p class="has-margin">
+        2.2 If model tables <strong>do not</strong> exist in your database
     </p>
-    <h3 class="is-size-5 has-margin">Example: include a model available as composer-package</h3>
-    <p class="has-margin">1. Include <a href="https://blua.blue">blua.blue's</a> image model</p>
-    <code>neoan3 add model blua-blue/image-model</code>
-    <p class="has-margin">2. Install/update MySQL tables</p>
-    <code>neoan3 migrate models up</code>-->
+    Run <code>neoan3 develop</code> (if not already running)
+    <p class="has-margin">
+        Visit <a href="http://localhost:8080/migrate">http://localhost:8080/migrate</a>
+    </p>
+    <p class="has-margin">
+        3 Design your table(s) and write your migration (write out).
+    </p>
+    Run <code>neoan3 migrate models up</code>
+
 </section>
