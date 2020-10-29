@@ -18,13 +18,13 @@
         What this means is best understood by simply trying it out: generate a new route component with: <br>
         <code>neoan3 new component example -t:route -v:yes -f:demo</code> and create a test for the component with <br>
         <code>neoan3 new test component example</code> <br><br>
-        You should have the following in file /component/example/ExampleTest.php
+        You should have the following in file /component/Example/ExampleTest.php
     </p>
     <pre>
         <code class="code-block">
             &lt?php
 
-            namespace Neoan3\Components;
+            namespace Neoan3\Component\Example;
 
             use PHPUnit\Framework\TestCase;
 
@@ -33,7 +33,7 @@
                 private Example $instance;
                 function setUp(): void
                 {
-                    $this->instance = new Example();
+                    $this->instance = new ExampleController();
                 }
 
                 public function testInit()
@@ -56,9 +56,8 @@
     </p>
     <h2 class="subtitle has-margin">Mocking</h2>
     <p>
-        Since the introduction of providers, mocking has become easier and a MockDatabaseWrapper is available at your disposal.
-        This class implements the Database interface and can therefore be used to write tests without actually executing database transactions.
-        In order to explore its capabilities, simply create a test for an existing model and inspect how the database is tested.
+        Since the introduction of providers, mocking has become easier and mocking database transactions, filesystem and authentication methods has become easy.
+        In order to explore capabilities, simply create a test for an existing model and inspect how the database is tested.
         Please be advised that your frame has to support dependency injection of a database provider in order to mock components that use models.
     </p>
     <h2 class="title has-margin">Continuous Integration</h2>
