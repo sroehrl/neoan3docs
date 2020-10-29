@@ -28,9 +28,7 @@ class Docs extends Serve
             'base'    => base
         ]);
 
-        if($_SERVER['HTTP_HOST'] !== 'neoan3.rocks' && $_SERVER['HTTP_HOST'] !== 'localhost'){
-            $this->header = file_get_contents(__DIR__ . '/warning.html');
-        }
+
         $this->js .= 'hljs.initHighlightingOnLoad();';
         //        $this->main = preg_replace('/\n/','',$this->main);
         parent::output($params);
