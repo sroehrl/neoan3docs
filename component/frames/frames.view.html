@@ -4,7 +4,7 @@
     <p>
         At the heart of Neoan3's ideology is abstraction. Abstraction empowers creators to hone in on an ongoing issue
         without having to review thousands of lines of code that has nothing to do with it. Frames allow for global
-        control over the project. Whenever routing in a ctrl.php file, you declare the frame that the component uses.
+        control over the project. Usually when routing in a Controller file, you declare the frame that the component uses.
     </p>
 
     <h2 class="subtitle has-margin">How to create a frame</h2>
@@ -24,7 +24,7 @@
     </p>
     <br/>
     <p>
-        As an example, let's set up a component named Test.
+        As an example, let's set up a frame named Test.
     </p>
     <pre>
         <code class="code-block">
@@ -36,14 +36,27 @@
 
             class Test extends Serve
             {
-                // you can overwrite public methods of \Core\Serve
-                function output($params = [])
+                function __construct(Database $db = null)
                 {
-                    // auto-generate title-tags depending on current route
-                    $this->addHead('title',preg_replace('/[A-Z]/',' $0',ucfirst(current_endpoint)));
+                    // make sure to run the original constructor
+                    parent::__construct();
 
-                    // In most scenarios, you probably want to execute the core's render function
-                    parent::output($params);
+                    // example: add the header located in component/Header/header.view.html to every route
+                    $this->hook('header','header');
+
+                    // example: enable injection of a Database provider.
+                    // if no (mock?) provider is injected, the database will use the <strong>my_database</strong> credentials
+                    // and connect via the default DatabaseWrapper
+                    $this->assignProvider('db', $db, function(){
+                        try{
+                            $credentials = getCredentials();
+                            if(isset($credentials[$this->dbCredentials])){
+                                $this->provider['db'] = new DatabaseWrapper($credentials['my_database']);
+                            }
+                        } catch (Exception $e) {
+                            echo 'No credentials found. Run "neoan3 credentials"';
+                        }
+                    });
                 }
 
                 function constants()
@@ -73,9 +86,9 @@
         </code>
     </pre>
     <p>
-        As you see from the above we have set up the component so that way it will not only have the title reflect in
-        head tag the name of the component.
-        In addition, we've set up a constants function that allows us to set global configuration as an array.
+        As you will soon notice, a frame enables you to place global functionality for your project or single routes & endpoints.
+        Don't confuse this concept with middleware. Since it is possible to overwrite core-functionality (e.g. the output function),
+        you can define functionality run both before and after a particular route or endpoint.
     </p>
     <h3 class="subtitle has-margin">Global configuration</h3>
     <p>

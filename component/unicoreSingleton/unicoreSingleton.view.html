@@ -9,49 +9,30 @@
     <pre><code class="code-block">
         &lt;?php
 
-        namespace Neoan3\Components;
+        namespace Neoan3\Component\MyComponent;
 
         use Neoan3\Core\Unicore;
 
-        class MyComponent extends Unicore
+        class MyComponentController extends Unicore
     </code></pre>
     <h3 class="subtitle has-margin">Default API-component:</h3>
     <pre><code class="code-block">
         &lt;?php
 
-        namespace Neoan3\Components;
+        namespace Neoan3\Component\MyComponent;
 
         use Neoan3\Frame\MyFrame;
 
-        class MyComponent extends MyFrame
+        class MyComponentController extends MyFrame
     </code></pre>
     <p class="has-margin">
-        However, this is only the case because the use of the Unicore singleton is implied.
-        Depending on your style, a route-component can look like this:
+        However, it's important to understand that is is only the case because the use of the Unicore singleton is implied.
+        If you do not want to use the Unicore singleton, you can directly extend your frame (or Serve) instead.
     </p>
-    <pre><code class="code-block">
-        &lt;?php
 
-        namespace Neoan3\Components;
-
-        use Neoan3\Frame\MyFrame;
-
-        class MyComponent extends MyFrame
-        {
-            function init()
-            {
-                // load "component/myComponent/myComponent.view.html" into the main hook of frame "MyFrame"
-                $this->hook('main', 'myComponent');
-                // render/output page
-                $this->output();
-            }
-        }
-    </code></pre>
     <p class="has-margin">
-        In the above scenario, your controller extends your frame which extends the core's Serve class.
-        The advantage of that pattern is a small performance boost as no other assumptions or file-inclusions are made.
-        <br>The disadvantage is that associated files (like <code>component/myComponent/myComponent.ctrl.js</code> or
-        <code>component/myComponent/myComponent.style.css</code>) are not automatically included when present.
+        <br>The disadvantage of not using Unicore is that associated files (like <code>component/MyComponent/myComponent.ctrl.js</code> or
+        <code>component/MyComponent/myComponent.style.css</code>) are not automatically loaded when present. However, this can sometimes be wanted.
         Additionally, the used frame cannot be dynamic but is hard-coded into the class.
         This binds the component to a certain frame which might be of importance for reusability considerations. <br>
         The Unicore singleton generates a wrapper around the business logic and "forces" the developer to write logic in
@@ -60,15 +41,15 @@
     <pre><code class="code-block">
         &lt;?php
 
-        namespace Neoan3\Components;
+        namespace Neoan3\Component\MyComponent;
 
         use Neoan3\Core\Unicore;
 
-        class MyComponent extends Unicore
+        class MyComponentController extends Unicore
         {
             function init()
             {
-                // initiate a particular frame (this can be dynamic e.g. via SESSION, GET, SERVER etc)
+                // initiate a particular frame (this can be dynamic e.g. via SESSION, GET, SERVER, sub() etc)
                 $this->uni('myFrame')
 
                 // we now have a singleton including methods inherited from the frame as well as from the core
@@ -132,43 +113,11 @@
         Typically, the view passed as a parameter will be the view.html that is local to the ctrl.php.
     </p>
 
-    <h2 class="subtitle has-margin">addHead</h2>
-    <p>
-        addHead has two parameters "what" and "obj". "what" indicates what you want to add to the head tag of the html.
-        For instance, If you pass "title", you can pass an "obj" that will indicate what appears in the title tag. Possible values are:
-    </p>
-    <div class="content">
-        <ul>
-            <li>link (accepts assoc-array)</li>
-            <li>base (accepts string)</li>
-            <li>title (accepts string)</li>
-            <li>meta (accepts assoc-array)</li>
-        </ul>
-    </div>
-    <pre><code class="code-block">
-        ...
-        ->addHead('title', isset($this->content['name']) ? $this->content['name'] : 'Overview')
-        ->addHead('meta', ['name' => 'robots', 'content' => 'noindex,nofollow'])
-        ...
-    </code></pre>
-    <p class="has-margin">Note that most of these values can be set </p>
 
-    <h2 class="subtitle has-margin">addStylesheet</h2>
-    <p class="has-margin">
-        Based on the origin of the file stylesheets are either included into the DOM's style tag or external includes.
-    </p>
-    <pre><code class="code-block">
-        ...
-        // external stylesheets are included with @import
-        ->addStylesheet('//some-cool-css-framework.com/style.min.js')
-
-        // content of local stylesheet is written to style-tag
-        ->addStylesheet(base . 'asset/style.css')
-        ...
-    </code></pre>
     <h2 class="subtitle has-margin">callback</h2>
     <p class="has-margin">
-        To include additional functionality, the callback-method is a useful way to indicate when functionality outside the stream-of-consciousness is executed
+        To include additional functionality, the callback-method is a useful way to indicate when functionality outside the stream-of-consciousness is executed.
+        Alternatively, you can directly place a function into the callback method.
     </p>
     <pre><code class="code-block">
         public $greeting;
@@ -201,21 +150,25 @@
     </p>
     <pre><code class="code-block">
         ...
-        $this->uni()
-            // load component/myElement/myElement.ce.js and (if exists) component/myElement/myElement.ce.html in a template tag with the id "myElement".
-             ->includeElement('myElement',['userId' => $userId])
+        $this
+            ->uni()
+            ->callback(function($uni){
+                // load component/MyElement/myElement.ce.js and (if exists) component/MyElement/myElement.ce.html in a template tag with the id "myElement".
+                 $uni->renderer->includeElement('myElement',['userId' => $userId])
 
-            // load external js
-             ->includeJs('//some-awesome-jslibrary.com/file.min.js')
+                // load external js
+                 $uni->renderer->includeJs('//some-awesome-jslibrary.com/file.min.js')
 
-            // load local js
-            // note how the first parameter is the location (required),
-            // the second one an array with substitutions (as always, with curly brackets) (optional),
-            // and the last one a type for th script-tag (optional, defaults to "text/javascript"),
-             ->includeJs(base. 'component/sibling/sibling.ctrl.js', ['context' => 'test'], 'text/javascript')
+                // load local js
+                // note how the first parameter is the location (required),
+                // the second one an array with substitutions (as always, with curly brackets) (optional),
+                // and the last one a type for th script-tag (optional, defaults to "text/javascript"),
+                 $uni->renderer->includeJs(base. 'component/sibling/sibling.ctrl.js', ['context' => 'test'], 'text/javascript')
 
-            // include node-modules (note: the path-parameter is already based on the node_module directory)
-             ->includeJsModule('@coolPackage/index.js')
+                // include node-modules (note: the path-parameter is already based on the node_module directory)
+                 $uni->renderer->includeJsModule('@coolPackage/index.js')
+            })
+
         ...
     </code></pre>
 

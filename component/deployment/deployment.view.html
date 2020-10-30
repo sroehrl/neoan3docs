@@ -1,0 +1,79 @@
+<section class="section">
+    <h1 class="title">Deployment</h1>
+    <h2 class="subtitle">A question of choice</h2>
+    <p>
+        There are several ways you can deploy your application.
+
+    </p>
+    <article class="message is-danger has-margin">
+        <div class="message-header">
+            <p>Note!</p>
+        </div>
+        <div class="message-body">
+            In all scenarios you will want to make sure that the component "migrate" is either behind authentication
+            or not being deployed at all (recommended).
+
+        </div>
+    </article>
+    <h2 class="subtitle">Production checklist</h2>
+    <p>Since we cannot go into all possible scenarios, let's have a look at what to consider when deploying manually. You can derive conclusions for possible processes, pipelines or containers from it.</p>
+
+    <div class="panel has-margin">
+        <p class="panel-heading">Checklist</p>
+
+        <div class="panel-block">
+            <a target="_blank"  href="#production-cli">
+                neoan3-cli available on the production server?
+            </a>
+        </div>
+        <div class="panel-block">
+            <a target="_blank"  href="#production-environment">
+                check .htaccess or NGINX settings
+            </a>
+        </div>
+        <div class="panel-block">
+            <a target="_blank"  href="#database">
+                database prepared on the production server? (if applicable)
+            </a>
+        </div>
+        <div class="panel-block">
+            <a target="_blank"  href="#upload">
+                upload
+            </a>
+        </div>
+        <div class="panel-block">
+            <a target="_blank"  href="#migration">
+                run migration (if applicable)
+            </a>
+        </div>
+
+    </div>
+    <h3 id="production-cli" class="subtitle has-margin">neoan3 cli on production</h3>
+    <p>
+        Make sure <strong>composer</strong> and the <strong>neoan3-cli</strong> is installed on your production server (or declared in your container).
+        It is likely that you will want to run migrations directly on the server.
+    </p>
+    <h3 id="production-environment" class="subtitle has-margin">production environment</h3>
+    <p>
+        When running apache, make sure the rewrite module is active and that htaccess files are respected.
+        Inspect your projects .htaccess and make sure the rewrite base is set in accordance with your server's web root (usually "/" when not running in a subfolder of your domain).
+        Also have a look at the rules regarding https over http (we recommend certbot/letsencrypt). <br>
+        When using Nginx, either direct your location to <strong>_neoan/server.php</strong> or <strong>index.php</strong>.
+    </p>
+    <h3 id="database" class="subtitle has-margin">database</h3>
+    <p>
+        We will assume that you are using a relational SQL database as this is the default case for neoan3 applications.
+        Ensure you have a database installed and a user that has non-root privileges.
+    </p>
+    <h3 id="upload" class="subtitle has-margin">upload</h3>
+    <p>
+        Whether you retrieve your production code via image, SFTP upload or GIT is up to you. Should you upload your files manually (e.g via FTP),
+        avoid uploading the vendor and node_modules folder (if exists), but rather run composer and npm from the production server.
+        Should you require environment variables, consider differences (when using <code>neoan3 credentials</code> potential mistakes can be avoided).
+    </p>
+    <h3 id="migration" class="subtitle has-margin">run migration</h3>
+    <p>
+        Run <code>neoan3 migrate models up</code> to create or update your production database structure.
+        If you need any additional environment variables governed by the cli-tool, run <code>neoan3 credentials</code>
+    </p>
+</section>
