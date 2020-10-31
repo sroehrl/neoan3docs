@@ -1,0 +1,81 @@
+<section class="section">
+    <h1 class="title">API routing</h1>
+    <h2 class="subtitle">api.v1</h2>
+    <p>
+        Neoan3 ships with a REST structured JSON API (v1). Its base url is /api.v1. When running the development server,
+        your endpoints therefore start with <code>http://localhost:8080/api.v1</code>, followed by your component name.
+    </p>
+    <p class="has-margin">
+        1. Create an API endpoint <br>
+        <code>neoan3 new component myEndpoint -t:api</code>
+    </p>
+    <article class="message has-margin">
+        <div class="message-header">
+            <p>Note!</p>
+        </div>
+        <div class="message-body has-text-white">
+            Regardless of component type, endpoints resolve kebab case. The full url of this example would therefore be
+            <br><code>http://localhost:8080/api.v1/my-endpoint</code>
+        </div>
+    </article>
+    <p class="has-margin">
+        2. Define available methods <br>
+        Within the generated component controller, you can define available methods by prepending the method.
+        In order to create a GET-endpoint, you would therefore create the method <strong>getMyEndpoint()</strong>.
+    </p>
+    <p class="has-margin">
+        3. Handle parameters/body <br>
+        By defining parameters, you dictate how the API will interpret the validity of calls made against the endpoint.
+        It allows you to handle various possible combinations and define whether or not parameters are optional.
+    </p>
+    <article class="message has-margin">
+        <div class="message-header">
+            <p>Examples</p>
+        </div>
+        <div class="message-body has-text-white" style="max-width: 100%; overflow-x: auto">
+            <table class="table">
+                <tr>
+                    <th>Definition</th>
+                    <th>Fails</th>
+                    <th>Works</th>
+                </tr>
+                <tr>
+                    <th>getMyEndpoint()</th>
+                    <td></td>
+                    <td>GET api.v1/my-endpoint <br>GET api.v1/my-endpoint/ABC123 </td>
+                </tr>
+                <tr>
+                    <th>getMyEndpoint(string $id)</th>
+                    <td>GET api.v1/my-endpoint</td>
+                    <td>GET api.v1/my-endpoint/ABC123</td>
+                </tr>
+                <tr>
+                    <th>getMyEndpoint(?string $id=null)</th>
+                    <td></td>
+                    <td>GET api.v1/my-endpoint <br>GET api.v1/my-endpoint/ABC123</td>
+                </tr>
+                <tr>
+                    <th>getMyEndpoint(?string $id=null, array $params)</th>
+                    <td>GET api.v1/my-endpoint</td>
+                    <td>GET api.v1/my-endpoint?some=value <br>GET api.v1/my-endpoint/ABC123?some=value</td>
+                </tr>
+            </table>
+        </div>
+    </article>
+    <p class="has-margin">
+        4. Handle Errors <br>
+        The APi will automatically throw request errors for malformed requests of any sort.
+        However, in some cases you will want to return such errors yourself. To do so, feel free to use Neoan3\Core\RouteException.
+        <br>
+        e.g. <code>throw new RouteException('unauthorized', 401);</code> <br>
+        The API will respond with the right headers and status.
+    </p>
+    <p class="has-margin">
+        5. Handle results <br>
+        Your method simply needs to return any value that can be encoded into a JSON response. In most cases, returning an array is the right choice.
+        <br><code>return ['request'=>'accepted'];</code>
+    </p>
+    <p class="has-margin">
+        Neoan3 ships with a similar example. Please feel free to have a look at /component/Endpoint
+    </p>
+</section>
