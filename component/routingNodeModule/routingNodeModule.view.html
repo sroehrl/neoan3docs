@@ -1,0 +1,22 @@
+<section class="section">
+    <h1 class="title">Custom Components & node modules</h1>
+    <h2 class="subtitle">Conquering the front end</h2>
+    <p>
+        When installing neoan3, you might have noticed that it ships with a component called <strong>CustomElement</strong>.
+        This component is used to showcase the possibility to include javascript components (we are using a native webcomponent in order to avoid any dependency of a JS framework).
+    </p>
+    <h3 class="subtitle has-margin">Why is this a question of routing?</h3>
+    <p>Neoan3 routes node_module paths through its core, making two very unique functionalities possible:</p>
+    <p class="has-margin">
+        <strong>Browser imports</strong><br>
+        In modern javascript, scripts require files which again have dependencies of their own. This creates a scenario in which an interpreted language like
+        javascript has to be compiled to run. Neoan3, when used correctly, can eliminate this need. Since this isn't a javascript framework or tutorial,
+        the interested person might want to look at the core files .htaccess, /_neoan3/base/Node.php and /_neoan/base/FileServe.php.
+    </p>
+    <p class="has-margin">
+        <strong>Server side rendered javascript</strong><br>
+        Additionally, it enables you to use javascript as a template, allowing dynamic variables, code and conditionals to be influenced <strong>before</strong>
+        being delivered to the client. This allows to enhance security and minimizing requests.
+    </p>
+
+</section>

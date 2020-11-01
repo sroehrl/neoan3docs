@@ -1,0 +1,35 @@
+<section class="section">
+    <h1 class="title">Components</h1>
+    <h2 class="subtitle">The various types</h2>
+    <p>
+        Throughout this documentation you will find references for four different types of components:
+    </p>
+    <ul style="list-style: circle; margin-left: 20px" class="has-margin">
+        <li>Route components</li>
+        <li>API components</li>
+        <li>Hybrid components</li>
+        <li>Custom components</li>
+    </ul>
+    <p class="has-margin">
+        It's important to understand that the differences are more conceptual than technical. While the default route component controller
+        extends <a href="{{base}}unicore-singleton/">Unicore</a> and the default API controller the used Frame, there is no necessity for this setup.
+        Both an API component and a route component could either extend the used frame or the core's <strong>Serve</strong> class (if no providers are needed).
+        Conceptually, however, we make the following distinctions:
+    </p>
+    <p class="has-margin">
+        <strong>Route components</strong> <br>are components with the purpose of being used as a SSR web-route. As such, they have a method
+        <strong>init</strong> which ultimately executes a rendering mechanism (method <strong>output</strong> of the default renderer)
+    </p>
+    <p class="has-margin">
+        <strong>API components</strong> <br>are components with the purpose of being used as API endpoints. As such, they contain methods meant to be executed
+        when certain http-methods are consumed.
+    </p>
+    <p class="has-margin">
+        <strong>Hybrid components</strong> <br>are components containing both, rendering capabilities as well as API endpoints. This can make sense in cases where neoan3
+        is used as a full stack solution or functionality can be either SSR rendered or provided through an API.
+    </p>
+    <p class="has-margin">
+        <strong>Custom components</strong> <br>are the only real outliers. While neoan3 has certain routing rules in place, the actual usage is quite unrestricted and depends on
+        what you want to achieve and what technology is used.
+    </p>
+</section>

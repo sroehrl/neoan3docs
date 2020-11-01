@@ -38,23 +38,14 @@
             function __construct(Database $db = null)
             {
                 parent::__construct();
-                if($db){
-                    $this->db = $db;
-                } else {
-                    $this->db = new DatabaseWrapper(getCredentials()['my_db']);
-                }
+                $this->assignProvider('db', $db, function(){
+                    $credentials = getCredentials();
+                    if(isset($credentials[$this->dbCredentials])){
+                        $this->provider['db'] = new DatabaseWrapper($credentials['your-db']);
+                    }
+                });
             }
-            /**
-             * IMPORTANT: in order to automatically decouple the models as well,
-             * you need a method handling model loading to avoid having to call the init-method each time
-             * @param $model
-             * @return mixed
-             */
-            function model($model)
-            {
-                $model::init($this->db);
-                return $model;
-            }
+
 
         }
     </code></pre>
@@ -63,13 +54,13 @@
         &lt;?php
 
 
-        namespace Neoan3\Components;
+        namespace Neoan3\Component\Demo;
 
         use Neoan3\Core\Unicore;
         use Neoan3\Provider\MySql\Database;
-        use Neoan3\Model\postModel;
+        use Neoan3\Model\PostModel;
 
-        class Demo extends Unicore
+        class DemoController extends Unicore
         {
             /**
              * @var Database|null
@@ -109,10 +100,10 @@
             function bind($uni)
             {
                 // example without the use of a model layer:
-                // $uni->db->easy('post.*', ['^delete_date'])
+                // Neoan3\Apps\Db::easy('post.*', ['^delete_date'])
 
                 // using a model
-                $this->posts = $uni->model(postModel::class)::find(['^delete_date']);
+                $this->posts = $uni->loadModel(postModel::class)::find(['^delete_date']);
                 return $uni;
             }
         }
@@ -122,13 +113,13 @@
         &lt;?php
 
 
-        namespace Neoan3\Components;
+        namespace Neoan3\Component\Demo;
 
         use Neoan3\Provider\MySql\Database;
-        use Neoan3\Model\postModel;
+        use Neoan3\Model\PostModel;
         use Neoan3\Frame\Demo as DemoFrame;
 
-        class Demo extends DemoFrame
+        class DemoController extends DemoFrame
         {
 
             /**
@@ -153,7 +144,7 @@
             {
                 $this
                     ->hook('main', 'demo', [
-                        'posts' => $this->model(postModel::class)::find(['^delete_date']);
+                        'posts' => $this->loadModel(postModel::class)::find(['^delete_date']);
                     ])
                     ->output();
             }

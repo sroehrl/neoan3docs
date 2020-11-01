@@ -1,0 +1,101 @@
+<section class="section">
+    <h1 class="title">CRUD</h1>
+    <h2 class="subtitle">CREATE READ UPDATE DELETE</h2>
+    <p class="has-margin">
+        Interacting with persistent data (usually through a database) is the likely the most common task for any backend.
+        To simplify this process as far as possible, model interactions make use of a abstraction level called "transformer".
+        This layer uses the model definition of your migration in order to generate database transactions. On this page, we will assume the
+        use of the default MySQL providers.
+    </p>
+    <h2 class="subtitle">Magic methods</h2>
+    <pre><code class="code-block">
+        public static function __callStatic($method, $args)
+        {
+            if(!method_exists(self::class, $method)){
+                $transform = new Transform('user', self::$db);
+                return $transform->$method(...$args);
+            } else {
+                return self::$method(...$args);
+            }
+        }
+    </code></pre>
+    <p class="has-margin">
+        When generating a model via the cli-tool, the methods <strong>__callStatic</strong> and <strong>init</strong> are generated.
+        While the init function is used to assign providers (usually database injection), __callStatic uses the transformer if no own method is implemented.
+        The transformer handles the following methods:
+    </p>
+    <p class="has-margin">
+        <strong>get(string $id)</strong><br>
+        Retrieve (read) a entity by primary key (id).
+    </p>
+    <p class="has-margin">
+        <strong>create(array $model)</strong><br>
+        Create a new entity validated against the migration. This method returns the created entity.
+    </p>
+    <p class="has-margin">
+        <strong>find(array $condition)</strong><br>
+        Retrieve multiple results based on a condition array (per default in accordance with the DatabaseWrapper).
+    </p>
+    <p class="has-margin">
+        <strong>update(array $model)</strong><br>
+        Update an existing entity after modification. This method returns the updated entity.
+    </p>
+    <p class="has-margin">
+        <strong>delete(string $id, $hard = false)</strong><br>
+        Sets a delete stamp or completely removes an entity from the database (when $hard is set to true).
+    </p>
+    <h2 class="subtitle">Manipulating behavior</h2>
+    <p class="has-margin">
+        In some instances we might want to manipulate what is retrieved from or goes into the transformer logic.
+        In the following example, let's assume we are dealing with a user model and do not want to retrieve the password.
+    </p>
+    <pre><code class="code-block">
+        public static function __callStatic($method, $args)
+        {
+            if(!method_exists(self::class, $method)){
+                $transform = new Transform('user', self::$db);
+                // we are calling our own function "out"
+                return self::out($transform->$method(...$args));
+            } else {
+                return self::$method(...$args);
+            }
+        }
+
+        private static function out($result)
+        {
+            // We have to account for two scenarios: a single entry is retrieved
+            // or multiple entries are retrieved
+            if(isset($result['id'])){
+                // single (e.g. via get())
+                // unset the password
+                unset($result['password']);
+            } else {
+                // multiple entries
+                foreach ($result as $i => $hit){
+                    // unset each password
+                    unset($result[$i]['password']);
+                }
+            }
+            return $result;
+        }
+    </code></pre>
+    <h2 class="subtitle has-margin">Using models in controllers</h2>
+    <p class="has-margin">
+        Since the introduction of providers, decoupling will allow easy testing. Although you can use & call the models in various ways,
+        we here assume utilization of the core's <strong>loadModel</strong> functionality.
+    </p>
+    <pre><code class="code-block">
+        ...
+        // in a Unicore scenario
+        $this
+            ->uni('demo')
+            ->addRenderParameter('users', function(\Neoan3\Core\Serve $serve) {
+                return $serve->loadModel(\Neoan3\Model\User\UserModel::class)::find(['name' => 'amadeus']);
+            })
+            ->hook('main', 'profile')
+            ->output();
+        ...
+        // in an API scenario
+        return $this->loadModel(\Neoan3\Model\User\UserModel::class)::find(['name' => 'amadeus']);
+    </code></pre>
+</section>
