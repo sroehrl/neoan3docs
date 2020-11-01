@@ -19,7 +19,7 @@
 
             $model = $this->loadModel(PostModel::class);
             // check if currently authenticated user is the owner of the post
-            if($model::get($body['id'])['user_id'] !== $jwt['jti']){
+            if($model::get($body['id'])['user_id'] !== $jwt->getUserId()){
                 throw new RouteException('no permission to edit this entry', 401);
             }
             // all checks ok? Then update post

@@ -42,7 +42,7 @@ toTopButton.innerText = '⬆️';
 toTopButton.className = 'button is-rounded';
 toTopButton.style.position = 'fixed';
 toTopButton.style.bottom = '5px';
-toTopButton.style.right = '5px';
+toTopButton.style.right = '15px';
 toTopButton.style.display = 'none';
 toTopButton.addEventListener('click', ()=> window.scrollTo(0,0));
 body.append(toTopButton);
