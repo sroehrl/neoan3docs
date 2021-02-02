@@ -3,7 +3,18 @@
     <h2 class="subtitle">Abstraction & Decoupling</h2>
     <p>
         In order to inject dependencies like a database wrapper instead of coupling models with a particular orm or database type,
-        you can use providers and respective interfaces while programming.
+        you can use providers and respective interfaces while programming. Providers are not "untouchable" and are therefore not located in the
+        core directory (_neoan). The default package currently contains the following providers
+    </p>
+    <ul style="list-style: circle; margin-left: 20px" class="has-margin">
+        <li>Attributes (for PHP8 attribute hooks)</li>
+        <li>Auth (for JWT & Session injection)</li>
+        <li>Filesystem (mocking of native PHP file functions)</li>
+        <li>Model (Attribute hook & compliant Model interface)</li>
+        <li>MySql (MySql database wrapper, transformer & mocking)</li>
+    </ul>
+    <p>
+        Using MySql database providers as an example, let's see how providers can be used:
     </p>
     <p class="has-margin">In a frame</p>
     <pre><code class="code-block">
@@ -38,23 +49,16 @@
             function __construct(Database $db = null)
             {
                 parent::__construct();
-                if($db){
-                    $this->db = $db;
-                } else {
-                    $this->db = new DatabaseWrapper(getCredentials()['my_db']);
-                }
+                // assignProvider takes three arguments:
+                // the first one the reference name, then potential injections, the the fallback (default) assignment closure
+                $this->assignProvider('db', $db, function(){
+                    $credentials = getCredentials();
+                    if(isset($credentials['your-db'])){
+                        $this->provider['db'] = new DatabaseWrapper($credentials['your-db']);
+                    }
+                });
             }
-            /**
-             * IMPORTANT: in order to automatically decouple the models as well,
-             * you need a method handling model loading to avoid having to call the init-method each time
-             * @param $model
-             * @return mixed
-             */
-            function model($model)
-            {
-                $model::init($this->db);
-                return $model;
-            }
+
 
         }
     </code></pre>
@@ -63,27 +67,24 @@
         &lt;?php
 
 
-        namespace Neoan3\Components;
+        namespace Neoan3\Component\Demo;
 
         use Neoan3\Core\Unicore;
         use Neoan3\Provider\MySql\Database;
-        use Neoan3\Model\postModel;
+        use Neoan3\Model\PostModel;
 
-        class Demo extends Unicore
+        class DemoController extends Unicore
         {
             /**
              * @var Database|null
              */
             private ?DataBase $db;
 
-            /**
-             * @var posts
-             */
-            private array $posts;
 
             /**
              * Demo constructor.
-             * This constructor is only necessary if providers a decoupled
+             * If you want to inject or decouple a component (or test it with mocking), you can create a constructor
+             * that accepts your injections (here the database for model functionality)
              * @param Database|null $db
              */
             public function __construct(DataBase $db = null)
@@ -97,24 +98,25 @@
             function init()
             {
                 $this
+                    // register providers in the right order BEFORE initializing uni()
                     ->registerProvider($this->db)
-                    ->callback($this, 'bind')
-                    ->uni('demo')
-                    ->hook('main', 'demo', ['posts' => $this->posts])
+                    // initialize Unicore singleton with wanted frame
+                    ->uni('Demo')
+                    // in this example, we are writing render parameters to all hooks (including "main")
+                    ->addRenderParameter('posts', function($context){
+                        // We now attach all found model entities to "posts"
+                        return $context->loadModel(PostModel::class)::find([]);
+                    })
+                    /*
+                        Demo/demo.view.html could look like this:
+                        &lt;section>
+                            &lt;p n-for="posts as post">{{post.title}}&lt;/p>
+                        &lt;/section>
+                    */
+                    ->hook('main', 'demo')
                     ->output();
             }
-            /**
-             * Route call (Singleton style)
-             */
-            function bind($uni)
-            {
-                // example without the use of a model layer:
-                // $uni->db->easy('post.*', ['^delete_date'])
 
-                // using a model
-                $this->posts = $uni->model(postModel::class)::find(['^delete_date']);
-                return $uni;
-            }
         }
     </code></pre>
     <p class="has-margin">In a controller extending a frame</p>
@@ -122,42 +124,52 @@
         &lt;?php
 
 
-        namespace Neoan3\Components;
-
-        use Neoan3\Provider\MySql\Database;
-        use Neoan3\Model\postModel;
+        namespace Neoan3\Component\Demo;
+        use Neoan3\Model\PostModel;
         use Neoan3\Frame\Demo as DemoFrame;
 
-        class Demo extends DemoFrame
+        class DemoController extends DemoFrame
         {
-
-            /**
-             * @var posts
-             */
-            private array $posts;
-
-            /**
-             * Demo constructor.
-             * This constructor is only necessary if providers a decoupled
-             * @param Database|null $db
-             */
-            function __construct(Database $db = null)
-            {
-                parent::__construct($db);
-            }
-
             /**
              * Route call
              */
             function init()
             {
                 $this
+                    // this time, let's bind our posts directly to the main hook only
                     ->hook('main', 'demo', [
-                        'posts' => $this->model(postModel::class)::find(['^delete_date']);
+                        'posts' => $this->loadModel(PostModel::class)::find(['^delete_date']);
                     ])
                     ->output();
             }
 
+        }
+    </code></pre>
+    <p class="has-margin">In a controller extending a frame using <strong>PHP8 attributes</strong></p>
+    <pre><code class="code-block">
+        &lt;?php
+
+
+        namespace Neoan3\Component\Demo;
+        use Neoan3\Model\PostModel;
+        use Neoan3\Frame\Demo as DemoFrame;
+
+        class DemoController extends DemoFrame
+        {
+            /**
+             * Route call
+             */
+            #[InitModel(DevModel::class)]
+            function init()
+            {
+                $this
+                    // when using PHP8 & a frame supporting the UseAttributes provider,
+                    // conversing with a model is even cleaner without giving up DI & decoupling
+                    ->hook('main', 'demo', [
+                        'posts' => PostModel::find(['^delete_date']);
+                    ])
+                    ->output();
+            }
         }
     </code></pre>
     <p class="has-margin">In a model</p>
@@ -217,10 +229,10 @@
         ...
         // testing a model
         $mockDb = new Neoan3\Provider\MySql\MockDatabaseWrapper();
-        $model = $mockDb->mockModel('post');
-        $mockDb->registerResult([$model]);
+        $model = $mockDb->mockGet('Post');
         PostModel::init($mockDb);
-        $toTest = PostModel::get('123142345');
+        $toTest = PostModel::get($model['id']);
+        $this->assetSame($model, $toTest);
 
     </code></pre>
 </section>

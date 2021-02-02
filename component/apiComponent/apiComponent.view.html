@@ -1,0 +1,46 @@
+<section class="section">
+    <h1 class="title">Api Components</h1>
+    <h2 class="subtitle">A trustworthy backend</h2>
+    <p class="has-margin">
+        With all the capabilities of neoan3, using the framework as a pure backend has been the most common use case.
+        As production ready, testable development of APIs is possible within the same time as scaffolding and mocking would take,
+        it is clear why this use-case is so popular. As all functional restrictions and assumptions have already been presented in
+        <a href="{{base}}routing-api/">API routing</a>, we want to present some common examples here.
+    </p>
+    <h3 class="subtitle has-margin">Restricting access</h3>
+    <pre><code class="code-block">
+        //... in api component "post", assuming the use of JwtWrapper provider as "auth"
+        // define update endpoint
+        function putPost($body)
+        {
+            // throw a 401 authenticated response when no valid authentication is present
+            // otherwise, assign the json web token content to $jwt
+            $jwt = $this->provider['auth']->restrict();
+
+            $model = $this->loadModel(PostModel::class);
+            // check if currently authenticated user is the owner of the post
+            if($model::get($body['id'])['user_id'] !== $jwt->getUserId()){
+                throw new RouteException('no permission to edit this entry', 401);
+            }
+            // all checks ok? Then update post
+            return $model::update($body);
+        }
+    </code></pre>
+    <h3 class="subtitle has-margin">Using parameters conditionally</h3>
+    <pre><code class="code-block">
+        //... in api component "post", assuming the use of JwtWrapper provider as "auth"
+        // create get endpoint
+        function getPost($id = null, $search = [])
+        {
+            $model = $this->loadModel(PostModel::class);
+
+            // reacting to e.g. /api.v1/post/123ABC123ABC
+            if($id){
+                return $model::get($id);
+            }
+
+            // reacting to e.g. /api.v1/post?slug=my-post
+            return $model::find($search);
+        }
+    </code></pre>
+</section>

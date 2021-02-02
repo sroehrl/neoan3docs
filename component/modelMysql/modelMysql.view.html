@@ -1,0 +1,98 @@
+<section class="section">
+    <h1 class="title">Databases & Migration</h1>
+    <h2 class="subtitle">Demystifying complexity</h2>
+    <p>
+        At the end of the day a model is nothing more but the adapter between a database and business logic.
+        Enabling easy of use without creating opinionated bottlenecks has always been the central goal of model interactions
+        in neoan3. With the help of the neoan3-cli tool, "binding" SQL to code is easy, predictable and intuitive.
+    </p>
+    <h3 class="subtitle has-margin">Migrate component</h3>
+    <p>
+        In order to get a better understanding of the details below, we recommend the following preparations:
+
+    </p>
+    <ul style="list-style: circle; margin-left: 20px" class="has-margin">
+        <li>create a new model with <code>neoan3 new model post</code></li>
+        <li>prepare a database and credentials (e.g with <code>neoan3 new database my_db</code>)</li>
+        <li>prepare development server with <code>neoan3 develop</code></li>
+        <li>open <a href="http://localhost:8080/migrate" target="_blank">http://localhost:8080/migrate</a></li>
+    </ul>
+    <h3 class="subtitle has-margin">The migrate.json</h3>
+    <p>
+        Each model has a migrate.json file indicating the structure of the database table(s) is it associated with.
+        A model's name should align with the table(s) it interacts with. <br>
+        This means that a model "post" assumes the existence of a table "post".
+        Additionally, one to many relations are created by snake case naming convention. <br>
+        This means that a table "post_comment" is assumed to have many comments in relation to a particular "post".
+    </p>
+    <h3 class="subtitle has-margin">The comparison</h3>
+    <strong>SQL</strong>
+    <pre><code class="code-block">
+        CREATE TABLE `post` (
+          `id` binary(16) NOT NULL,
+          `name` varchar(200) NOT NULL,
+          `text` text DEFAULT NULL,
+          `is_active` tinyint(1) DEFAULT NULL,
+          `insert_date` timestamp NULL DEFAULT current_timestamp(),
+          `delete_date` datetime DEFAULT NULL
+        ) DEFAULT CHARSET=utf8mb4;
+    </code></pre>
+    <strong>migrate.json</strong>
+    <pre><code class="code-block">
+        {
+          "post": {
+            "id": {
+              "type": "binary(16)",
+              "key": "primary",
+              "nullable": false,
+              "default": false,
+              "a_i": false
+            },
+            "name": {
+              "type": "varchar(200)",
+              "key": false,
+              "nullable": false,
+              "default": false,
+              "a_i": false
+            },
+            "text": {
+              "type": "text",
+              "key": false,
+              "nullable": true,
+              "default": false,
+              "a_i": false
+            },
+            "is_active": {
+              "type": "tinyint(1)",
+              "key": false,
+              "nullable": true,
+              "default": false,
+              "a_i": false
+            },
+            "insert_date": {
+              "type": "timestamp",
+              "key": false,
+              "nullable": true,
+              "default": "current_timestamp()",
+              "a_i": false
+            },
+            "delete_date": {
+              "type": "datetime",
+              "key": false,
+              "nullable": true,
+              "default": false,
+              "a_i": false
+            }
+          }
+        }
+    </code></pre>
+    <p class="has-margin">
+        <strong>You will never have to manually construct either of these files/commands.</strong>
+        Instead, your approach is always scenario based. If
+    </p>
+    <ul style="list-style: circle; margin-left: 20px" class="has-margin">
+        <li>Your table(s) exist/is up to date but not your migrate.json: <code>neoan3 migrate models down</code></li>
+        <li>Your migrate exists/is up to date but your database isn't: <code>neoan3 migrate models up</code></li>
+        <li>You just created a new model, and neither a migrate json nor table(s) in your database exists/are up to date: visit <a href="http://localhost:8080/migrate" target="_blank">http://localhost:8080/migrate</a></li>
+    </ul>
+</section>

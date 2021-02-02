@@ -1,0 +1,14 @@
+<section class="section">
+    <h1 class="title">Models</h1>
+    <h2 class="subtitle">Good old MVC</h2>
+    <p>
+        While the component based structure of neoan3 (and many other modern web frameworks) doesn't make it apparent,
+        the layers follow a classical separation of model, view and controller. This is important for both reusability and security.
+    </p>
+    <p class="has-margin">
+        As such, only component controllers (and frames, but that's usually a bad choice) can access a model.
+        You should always look at the data layer as independent construct and not place any business-logic in your models.
+    </p>
+    <a class="button is-primary is-outlined" href="{{base}}model-crud/" >Using models (CRUD)</a>
+    <a class="button is-primary is-outlined" href="{{base}}model-mysql/" >Databases & migrations</a>
+</section>

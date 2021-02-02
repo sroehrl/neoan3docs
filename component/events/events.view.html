@@ -5,11 +5,12 @@
         Events are a powerful tool to escape and interact between various pieces of functionality. In general, there are only a few methods:
     </p>
     <ul class="has-margin">
-        <li class="has-text-success">\Neoan3\Core\Event::listen($eventname, $callbackFunction )</li>
-        <li class="has-text-success">\Neoan3\Core\Event::listenAll($callbackFunction )</li>
-        <li class="has-text-success">\Neoan3\Core\Event::dispatch($eventname, $callbackFunction )</li>
+        <li class="has-text-success">\Neoan3\Core\Event::listen($eventname, $closure )</li>
+        <li class="has-text-success">\Neoan3\Core\Event::listenAll($closure )</li>
+        <li class="has-text-success">\Neoan3\Core\Event::dispatch($eventname, $closure )</li>
         <li class="has-text-success">\Neoan3\Core\Event::getFiredEvents()</li>
         <li class="has-text-success">\Neoan3\Core\Event::getRegisteredListeners()</li>
+        <li class="has-text-success">\Neoan3\Core\Event::hook($eventname, $closure)</li>
     </ul>
     <pre class="has-margin"><code class="code-block">
         // example in default.php:
@@ -25,6 +26,10 @@
     <h2 class="subtitle">Core\Route::notFound</h2>
     <p class="has-margin">
         This event happens AFTER a route has been searched for and BEFORE a 404 redirect and header gets served.
+    </p>
+    <h2 class="subtitle">Core\\Reflection::attribute</h2>
+    <p class="has-margin">
+        Fired when PHP8 attribute was encountered.
     </p>
     <h2 class="subtitle">Core\Api::incoming</h2>
     <p class="has-margin">

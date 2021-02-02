@@ -71,74 +71,70 @@
                     variable support works with double curly braces without spaces ( {{example}} ) The following files are
                     respected:
                 </p>
-                <table class="table has-margin">
-                    <thead>
-                    <tr>
-                        <th>Template File</th>
-                        <th>Entity</th>
-                        <th>Vairable</th>
-                        <th>Note</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>
-                            api.php
-                        </th>
-                        <td>component (API)</td>
-                        <td>name, frame</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>
-                            route.php
-                        </th>
-                        <td>component (Route)</td>
-                        <td>name, frame</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>
-                            view.html
-                        </th>
-                        <td>component (Route)</td>
-                        <td>name</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>
-                            ce.php
-                        </th>
-                        <td>Custom element</td>
-                        <td>name</td>
-                        <td>*PHP files for custom element is only generated if template is present</td>
-                    </tr>
-                    <tr>
-                        <th>
-                            ce.js
-                        </th>
-                        <td>Custom element</td>
-                        <td>name</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>
-                            ce.html
-                        </th>
-                        <td>Custom element</td>
-                        <td>name</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>
-                            transformer.php
-                        </th>
-                        <td>Model transformer</td>
-                        <td>name, structure</td>
-                        <td>*Transformer usage requires neoan3-apps/transformer</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div  style="max-width: 100%; overflow-x: auto">
+                    <table class="table has-margin">
+                        <thead>
+                        <tr>
+                            <th>Template File</th>
+                            <th>Entity</th>
+                            <th>Vairable</th>
+                            <th>Note</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>
+                                api.php
+                            </th>
+                            <td>component (API)</td>
+                            <td>name, frame</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                route.php
+                            </th>
+                            <td>component (Route)</td>
+                            <td>name, frame</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                view.html
+                            </th>
+                            <td>component (Route)</td>
+                            <td>name</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                ce.php
+                            </th>
+                            <td>Custom element</td>
+                            <td>name</td>
+                            <td>*PHP files for custom element is only generated if template is present</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                ce.js
+                            </th>
+                            <td>Custom element</td>
+                            <td>name</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                ce.html
+                            </th>
+                            <td>Custom element</td>
+                            <td>name</td>
+                            <td></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
                 <p class="has-margin">
                     If the the cli-command `neoan3 new [transformer/component] &lt;name>` finds the according template,
                     it generates files accordingly. Want to learn more about cli-templating?

@@ -1,0 +1,69 @@
+<section class="section">
+    <h1 class="title">SSR routing</h1>
+    <h2 class="subtitle">The classic route component</h2>
+    <p>
+        SSR endpoints behave similar to <a href="{{base}}routing-api">API endpoints</a> in a lot of ways.
+        Any component controller that has a method <strong>init</strong> automatically is a valid route.
+    </p>
+    <p class="has-margin">
+        1. Create a route endpoint <br>
+        <code>neoan3 new component myHome -t:route</code>
+    </p>
+    <article class="message has-margin">
+        <div class="message-header">
+            <p>Note!</p>
+        </div>
+        <div class="message-body has-text-white">
+            Regardless of component type, endpoints resolve kebab case. The full url of this example would therefore be
+            <br><code>http://localhost:8080/my-home</code>
+        </div>
+    </article>
+    <p class="has-margin">
+        2. Handle deep routes <br>
+        You can easily read query-strings by using the global <strong>sub(int $number)</strong> function. While 0 would be the component itself,
+        1 would be the next URL part. <strong>sub(int $number)</strong> return false if not set.
+    </p>
+    <article class="message has-margin">
+        <div class="message-header">
+            <p>Examples</p>
+        </div>
+        <div class="message-body has-text-white" style="max-width: 100%; overflow-x: auto">
+            <table class="table">
+                <tr>
+                    <th>Url</th>
+                    <th>Sub-part</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <th>/my-home</th>
+                    <td>sub(0)</td>
+                    <td>"my-home"</td>
+                </tr>
+                <tr>
+                    <th>/my-home</th>
+                    <td>sub(1)</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <th>/my-home/today</th>
+                    <td>sub(1)</td>
+                    <td>"today"</td>
+                </tr>
+                <tr>
+                    <th>/my-home/today/123</th>
+                    <td>sub(2)</td>
+                    <td>"123"</td>
+                </tr>
+            </table>
+        </div>
+    </article>
+    <p class="has-margin">
+        3. Handle 404 <br>
+        If you offer SSR content, you likely want to have a look at <strong>default.php</strong> and make changes to th constant
+        <strong>default_404</strong>. It accepts a value used to determine which component to render in a 404 case.
+    </p>
+    <p class="has-margin">
+        4. Handle home page <br>
+        Usually a project has a default (home) page. You can set it in <strong>default.php</strong> by changing the value of <strong>default_ctrl</strong>
+    </p>
+</section>

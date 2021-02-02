@@ -1,0 +1,49 @@
+<section class="section">
+    <h1 class="title">Route Components</h1>
+    <h2 class="subtitle">Server Side Rendering</h2>
+    <p class="has-margin">
+        With huge steps in the javascript world in recent years,
+        server side rendering is still a huge topic for search engine optimization, content with little dynamical delivery as well as
+        compatibility. In neoan3, a route component usually consists of two files: the controller and the view.
+        Let's look at a few (here more or less nonsensical) possibilities of binding to the view.
+    </p>
+    <pre><code class="code-block">
+        // function init enables the route YOURPAGE/post to be available
+        ...
+        class PostController extends Unicore{
+            // see callback
+            private $content;
+            function init(): void
+            {
+                $this
+                    // the unicore initializes through the method uni.
+                    // while not necessary, you usually want to load a frame (here "demo")
+                    ->uni('Demo')
+                    // here we use the callback method to bind a value to the property $content
+                    ->callback(function($context){
+                        $context->content = 'some text'
+                    })
+                    // alternatively, we can directly pass to the renderer
+                    ->addRenderParameter('headline', fn()=> 'Title')
+                    // here we declare that the view post should be rendered in the main content container
+                    // and pass content and subtitle to the view
+                    // note how this is not necessary for "headline" as we directly passed that value to the renderer
+                    ->hook('main', 'post', ['content'=>$this->content, 'subtitle' => 'direct input'])
+                    // finally, the view gets compiled
+                    ->output();
+            }
+        }
+    </code></pre>
+    <pre><code class="code-block">
+        &lt!-- post.view.html -->
+        &lt;h1>{{headline}}&lt;/h1>
+        &lt;h2>{{subtitle}}&lt;/h2>
+        &lt;p>{{content}}&lt;/p>
+    </code></pre>
+    <pre><code class="code-block">
+        &lt!-- RESULT in browser -->
+        &lt;h1>Title&lt;/h1>
+        &lt;h2>direct input&lt;/h2>
+        &lt;p>some text&lt;/p>
+    </code></pre>
+</section>

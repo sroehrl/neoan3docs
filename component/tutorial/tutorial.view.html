@@ -1,14 +1,43 @@
-<section class="hero is-primary is-medium">
-    <div class="hero-body">
-        <div class="container">
-            <h1 class="title">
-                Tutorial: {{name}}
-            </h1>
-            <p class="has-margin" n-if="github">
-                Code: <code>git clone {{github}}</code>
-            </p>
-            <iframe style="width: 100%; height: 600px" src="https://www.youtube.com/embed/{{video}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div>
+    <section class="hero is-primary is-medium">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    {{name}}
+                </h1>
+                <p class="has-margin" n-if="github">
+                    Code: <code>git clone {{github}}</code>
+                </p>
+                <iframe style="width: 100%; height: 600px" src="https://www.youtube.com/embed/{{video}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p>{{description}}</p>
         </div>
-    </div>
-</section>
+    </section>
+    <section class="section">
+
+        <div class="columns">
+            <div class="column">
+                <h2 class="title">
+                    Tutorials:
+                </h2>
+                <ul>
+                    <li class="has-margin" n-for="tutorials as key => video">
+                        <a href="{{base}}tutorial/{{key}}/" ><span class="tag is-info">{{video.name}}</span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <h2 class="title">
+                    "Quickies":
+                </h2>
+                <ul>
+                    <li class="has-margin" n-for="hashtags as key => video">
+                        <a href="{{base}}tutorial/{{key}}/" ><span class="tag is-info">{{video.name}}</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
 
