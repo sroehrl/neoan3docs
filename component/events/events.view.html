@@ -42,7 +42,9 @@
     <h2 class="subtitle">Core\Api::afterAnswer</h2>
     <p class="has-margin">
         This event happens AFTER the API has completed the request and AFTER the response is sent to the client. <br>
-        (NOTE: neoan3 does not ship with parallelism out of the box. We play nicely with Spatie's <a href="https://github.com/spatie/async">Asynchronous and parallel PHP</a> if needed)
+        (Getting ideas?: neoan3 does not ship with parallelism out of the box.
+        We play nicely with Spatie's <a href="https://github.com/spatie/async">Asynchronous and parallel PHP</a> and are fans of
+        <a href="https://www.swoole.co.uk/">Swoole</a>)
     </p>
     <h2 class="subtitle">Core\Api::error</h2>
     <p class="has-margin">

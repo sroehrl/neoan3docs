@@ -15,7 +15,7 @@
         In some cases the tests can be completely generated for you.
     </p>
     <p class="has-margin">
-        What this means is best understood by simply trying it out: generate a new route component with: <br>
+        What this means is best understood by simply trying it out: generate a new route component with <br>
         <code>neoan3 new component example -t:route -v:yes -f:demo</code> and create a test for the component with <br>
         <code>neoan3 new test component example</code> <br><br>
         You should have the following in file /component/Example/ExampleTest.php
@@ -56,13 +56,15 @@
     </p>
     <h2 class="subtitle has-margin">Mocking</h2>
     <p>
-        Since the introduction of providers, mocking has become easier and mocking database transactions, filesystem and authentication methods has become easy.
+        Since the introduction of providers, mocking has become easier and mocking database transactions, filesystem and authentication methods is very approachable.
         In order to explore capabilities, simply create a test for an existing model and inspect how the database is tested.
         Please be advised that your frame has to support dependency injection of a database provider in order to mock components that use models.
+        However, you can also opt to use the actual database to test transactions.
     </p>
     <h2 class="title has-margin">Continuous Integration</h2>
     <p>
-        Neoan3 ships with a .travis.yml which resolves build-testing with php 7.4 and reporting to code-climate for quality, velocity and test-coverage evaluation.
+        Neoan3 ships with a .travis.yml which resolves build-testing with php 7.4 & 8.0 and reporting to code-climate for quality, velocity and test-coverage evaluation.
+        If you are using PHP8 and above and don't need compatability, feel free to remove 7.4 from .travis.yml
     </p>
     <h2 class="subtitle has-margin">Using Travis CI & Code Climate</h2>
     <p>
