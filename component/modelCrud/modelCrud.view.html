@@ -84,18 +84,86 @@
         Since the introduction of providers, decoupling will allow easy testing. Although you can use & call the models in various ways,
         we here assume utilization of the core's <strong>loadModel</strong> functionality.
     </p>
+    <h3>PHP7.4</h3>
     <pre><code class="code-block">
-        ...
         // in a Unicore scenario
-        $this
-            ->uni('demo')
-            ->addRenderParameter('users', function(\Neoan3\Core\Serve $serve) {
-                return $serve->loadModel(\Neoan3\Model\User\UserModel::class)::find(['name' => 'amadeus']);
-            })
-            ->hook('main', 'profile')
-            ->output();
-        ...
-        // in an API scenario
-        return $this->loadModel(\Neoan3\Model\User\UserModel::class)::find(['name' => 'amadeus']);
+        use Neoan3\Model\User\UserModel;
+        use Neoan3\Core\Unicore;
+
+        class MyRouteController extends Unicore
+        {
+            function init()
+            {
+                $this
+                    ->uni('demo')
+                    ->addRenderParameter('users', function(\Neoan3\Core\Serve $serve) {
+                        return $serve->loadModel(UserModel::class)::find(['name' => 'amadeus']);
+                    })
+                    ->hook('main', 'profile')
+                    ->output();
+
+        }
+
+    </code></pre>
+    <pre><code class="code-block">
+        // when extending a frame (e.g. default API behavior)
+        use Neoan3\Model\User\UserModel;
+        use Neoan3\Frame\Demo;
+
+        class MyRouteController extends Demo
+        {
+            function getMyRoute()
+            {
+                return $this->loadModel(UserModel::class)::find(['name' => 'amadeus']);
+            }
+        }
+    </code></pre>
+    <h3 style="margin-top: 1rem">PHP8</h3>
+    <pre><code class="code-block">
+        // using PHP8? Attributes can be used to initialize a model
+        use Neoan3\Model\User\UserModel;
+        use Neoan3\Frame\Demo;
+
+        class MyRouteController extends Demo
+        {
+            #[InitModel(UserModel::class)]
+            function getMyRoute()
+            {
+                return UserModel::find(['name' => 'amadeus']);
+            }
+        }
+    </code></pre>
+    <h3 style="margin-top: 1rem">Using a wrapper</h3>
+    <pre><code class="code-block">
+        // coming from doctrine or laravel and/or want to use objects?
+        use Neoan3\Model\User\UserModel;
+        use Neoan3\Model\User\UserModelWrapper;
+        use Neoan3\Frame\Demo;
+
+        class MyRouteController extends Demo
+        {
+            #[InitModel(UserModel::class)]
+            function getMyRoute()
+            {
+                $collection =  UserModelWrapper::retrieveMany(['name' => 'amadeus']);
+                return $collection->toArray();
+            }
+
+            #[InitModel(UserModel::class)]
+            function postMyRoute(array $postBody)
+            {
+                $newUser = new UserModelWrapper();
+                $newUser->setName($postBody['name']);
+                return $newUser->store()->toArray();
+            }
+
+            #[InitModel(UserModel::class)]
+            function putMyRoute(array $postBody)
+            {
+                $existingUser = UserModelWrapper::retrieveOne($postBody['id']);
+                $existingUser->setName($postBody['name'])->store();
+                return $existingUser->toArray();
+            }
+        }
     </code></pre>
 </section>

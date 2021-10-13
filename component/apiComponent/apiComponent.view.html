@@ -8,6 +8,7 @@
         <a href="{{base}}routing-api/">API routing</a>, we want to present some common examples here.
     </p>
     <h3 class="subtitle has-margin">Restricting access</h3>
+    <h3>PHP7.4</h3>
     <pre><code class="code-block">
         //... in api component "post", assuming the use of JwtWrapper provider as "auth"
         // define update endpoint
@@ -26,10 +27,32 @@
             return $model::update($body);
         }
     </code></pre>
-    <h3 class="subtitle has-margin">Using parameters conditionally</h3>
+    <h3 style="margin-top: 1rem">PHP8</h3>
     <pre><code class="code-block">
         //... in api component "post", assuming the use of JwtWrapper provider as "auth"
-        // create get endpoint
+        // define update endpoint
+
+        // throw a 401 authenticated response when no valid authentication is present
+        // otherwise, assign the json web token content to the frame's $auth
+
+        #[Authorization('restrict')]
+
+        // initialize model
+
+        #[InitModel(PostModel::class)]
+        function putPost($body)
+        {
+            // check if currently authenticated user is the owner of the post
+            if(PostModel::get($body['id'])['user_id'] !== $this->auth->getUserId()){
+                throw new RouteException('no permission to edit this entry', 401);
+            }
+            // all checks ok? Then update post
+            return PostModel::update($body);
+        }
+    </code></pre>
+    <h3 class="subtitle has-margin">Using parameters conditionally</h3>
+    <h3>PHP7.4</h3>
+    <pre><code class="code-block">
         function getPost($id = null, $search = [])
         {
             $model = $this->loadModel(PostModel::class);
@@ -41,6 +64,19 @@
 
             // reacting to e.g. /api.v1/post?slug=my-post
             return $model::find($search);
+        }
+    </code></pre>
+    <h3 style="margin: 1rem;">PHP8</h3>
+    <pre><code class="code-block">
+        #[InitModel(PostModel::class)]
+        function getPost($id = null, $search = [])
+        {
+            // reacting to e.g. /api.v1/post/123ABC123ABC
+            if($id){
+                return PostModel::get($id);
+            }
+            // reacting to e.g. /api.v1/post?slug=my-post
+            return PostModel::find($search);
         }
     </code></pre>
 </section>

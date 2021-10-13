@@ -36,10 +36,8 @@
         {
             /**
              * @var Database|DatabaseWrapper
-             * Setting this variable to "protected" will force database interactions within models
-             * (enforcing clean code can make sense)
              */
-            public Database $db;
+            public DatabaseWrapper $db;
 
             /**
              * Demo constructor.
@@ -51,6 +49,16 @@
                 parent::__construct();
                 // assignProvider takes three arguments:
                 // the first one the reference name, then potential injections, the the fallback (default) assignment closure
+
+                // since version 3.2 default injections can return directly
+                $this->db = $this->assignProvider('db', $db, function(){
+                    $credentials = getCredentials();
+                    if(isset($credentials['your-db'])){
+                        return new DatabaseWrapper($credentials['your-db']);
+                    }
+                });
+
+                // neoan3 prior 3.2
                 $this->assignProvider('db', $db, function(){
                     $credentials = getCredentials();
                     if(isset($credentials['your-db'])){
@@ -232,7 +240,7 @@
         $model = $mockDb->mockGet('Post');
         PostModel::init($mockDb);
         $toTest = PostModel::get($model['id']);
-        $this->assetSame($model, $toTest);
+        $this->assertSame($model, $toTest);
 
     </code></pre>
 </section>

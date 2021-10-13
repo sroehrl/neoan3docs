@@ -5,7 +5,7 @@
         Let's first clarify potential confusion: There are two types of templates. The ones used for generation with the cli-tool, and the view templates.
         Here we want to focus on creating dynamic view templates.
     </p>
-    <a class="button is-outlined is-primary has-margin" href="https://packagist.org/packages/neoan3-apps/template">learn more about neoan3-apps/template</a>
+    <a class="button is-outlined is-primary has-margin" href="https://github.com/sroehrl/neoan3-template#readme">learn more about neoan3-apps/template</a>
     <article class="message has-margin">
         <div class="message-header">
             <p>Note: Alternative template engines</p>
@@ -41,7 +41,9 @@
                     // (here the file /component/MyComponent/myComponent.view.html)
                     // the third argument accepts variables as array
                     // (usually the data will directly come from a model / database)
-                    ->hook('main', 'myComponent')
+                    ->hook('main', 'myComponent', [
+                        'renderParam' => 'We might also declare render parameters here.'
+                    ])
                     ->output();
             }
         }
@@ -50,11 +52,13 @@
     <pre><code class="code-block">
         &lth1>{{headline}}&lt/h1>
         &ltp>{{content}}&lt/p>
+        &ltp>{{renderParam}}&lt/p>
     </code></pre>
     <p class="has-margin">Result:</p>
     <pre><code class="code-block">
         &lth1>My variable&lt/h1>
         &ltp>This is some fine text&lt/p>
+        &ltp>We might also declare render parameters here.&lt/p>
     </code></pre>
     <h2 class="subtitle has-margin">A step further</h2>
     <p>

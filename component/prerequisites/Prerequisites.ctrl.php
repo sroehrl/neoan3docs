@@ -9,7 +9,7 @@ class Prerequisites extends Unicore
 {
     function init()
     {
-        $this->uni('docs')->hook('main','prerequisites')->output();
+        $this->uni('docs')->hook('main','prerequisites',['currentYear' => date('Y')])->output();
     }
 
 }
