@@ -100,6 +100,14 @@
                         </tr>
                         <tr>
                             <th>
+                                model.php
+                            </th>
+                            <td>model</td>
+                            <td>name</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>
                                 view.html
                             </th>
                             <td>component (Route)</td>
@@ -130,13 +138,23 @@
                             <td>name</td>
                             <td></td>
                         </tr>
-
+                        <tr>
+                            <th>
+                                *.json
+                            </th>
+                            <td>Credential template</td>
+                            <td></td>
+                            <td>
+                                It might sometimes be useful to provide a template for credentials to provide your team with
+                                the possibility for an easy setup.
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <p class="has-margin">
-                    If the the cli-command `neoan3 new component &lt;name>` finds the according template,
+                    If the the cli-command `neoan3 new [component|model] &lt;name>` finds the according template,
                     it generates files accordingly. Want to learn more about cli-templating?
                 </p>
                 <a href="https://github.com/neoan3/cli#templates" class="button is-outlined is-primary" target="_blank">
@@ -153,13 +171,13 @@
             <article>
                 <h2 class="subtitle has-margin" id="component-folder">Component folder</h2>
                 <p>
-                    This folder holds hybrid, route, api and custom components. Components must have their own, lower case directory.
-                    <br>Note that neoan3's routing system performs a kebab-to-camel-case transformation when evaluating routes.
+                    This folder holds hybrid, route, api and custom components. Components must have their own directory.
+                    <br>Note that neoan3's routing system performs a kebab-to-pascal-case transformation when evaluating routes. (as opposed to kebab-to-camel in versions <3.0)
                     <br>This means that
                 </p>
                 <p class="has-margin">
                     <code>your-app.com/my-component/</code> targets the component <br>
-                    <code>/component/myComponent</code><br>
+                    <code>/component/MyComponent</code><br>
                 </p>
                 <p>
                     <a class="button is-outlined is-primary" href="{{base}}component-types/">learn more about components</a>
@@ -211,10 +229,12 @@
                 <pre class="has-margin"><code class="code-block">
                     &lt;?php
                     // default route (homepage)
-                    define('default_ctrl','home');
+                    const default_ctrl = 'home';
+                    // or: define('default_ctrl','home');
 
                     // optional: custom 404
-                    define('default_404','notFound');
+                    const default_404 = 'notFound';
+                    // or: define('default_404','notFound');
 
                     // optional: react on early events
                     Event::listen('Core\\Route::notFound', function($call){
