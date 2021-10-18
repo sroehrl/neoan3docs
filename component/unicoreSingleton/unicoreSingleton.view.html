@@ -102,7 +102,7 @@
         &lt;/body>&lt;/html>
     </code></pre>
     <p class="has-margin">
-        The reason you won't see anything other then "main" used in all examples is due to the fact that default
+        The reason you won't see anything other than "main" used in all examples is due to the fact that default
         header & footer are addressed on the frame level rather than on the component level. Example in init():
     </p>
     <pre><code class="code-block">
@@ -113,6 +113,24 @@
         Typically, the view passed as a parameter will be the view.html that is local to the ctrl.php.
     </p>
 
+    <h2 class="subtitle has-margin">addRenderParameter</h2>
+    <p class="has-margin">
+        This method offers the most direct option to provide variables to the template. It is therefore ideal to be used with model interactions.
+        <br/>
+        Be aware of the scope implication of this method: these variables will be available to all hooks.
+    </p>
+    <pre><code class="code-block">
+        function init()
+        {
+            $this->uni()
+                 ->addRenderParameter('greeting', function(){
+                    // the render-variable "greeting" is now available to all hooks
+                    return "Hello world";
+                })
+                 ->hook('main')
+                 ->output();
+        }
+    </code></pre>
 
     <h2 class="subtitle has-margin">callback</h2>
     <p class="has-margin">
@@ -175,7 +193,7 @@
     <h2 class="subtitle has-margin">output</h2>
     <p class="has-margin">
         Output simply compiles the files & responds (echoes) to the client. The parameter isn't necessary but you can
-        add an array of pre-compiling function(s). Typically this is also at the end of a singleton.
+        add an array of pre-compiling function(s). Typically, this is also at the end of a singleton.
     </p>
     <pre><code class="code-block">
         ...
