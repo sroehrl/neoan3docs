@@ -53,7 +53,7 @@ class Tutorial extends Unicore{
                 'type' => 'tutorial'
             ],
             'routes_auth' => [
-                'video'=> 'deg4ZZw0VpI',
+                'video'=> '4h1JMpAx0cE',
                 'name' => 'neoan3 basics: RESTful API routes, JWT and authorization',
                 'github' => false,
                 'description' => '',
