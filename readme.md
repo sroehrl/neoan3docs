@@ -1,6 +1,6 @@
-# WELCOME HACKTOBERFEST
+# EOL notice
 
-Writing documentation is a good way to get your feet wet in the open source world. We appreciate any interest & engagement.
+neoan3 is no longer maintained. Please switch to [Lenkrad]([http://neoan3.rocks](https://lenkrad.neoan3.rocks))
 
 # neoan3 Documentation
 
