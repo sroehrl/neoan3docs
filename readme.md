@@ -1,6 +1,6 @@
 # EOL notice
 
-neoan3 is no longer maintained. Please switch to [Lenkrad]([http://neoan3.rocks](https://lenkrad.neoan3.rocks))
+neoan3 is no longer maintained. Please switch to [Lenkrad](https://lenkrad.neoan3.rocks)
 
 # neoan3 Documentation
 
